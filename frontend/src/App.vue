@@ -4,10 +4,20 @@
 
 <script>
 export default {
-name: 'App',
-setup() {
-  document.getElementById('loadingPage').remove()
-}
+  name: 'App',
+  setup() {
+    document.getElementById('loadingPage').remove()
+  }
 }
 </script>
-<style lang="less"></style>
+
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100%;
+}
+</style>
