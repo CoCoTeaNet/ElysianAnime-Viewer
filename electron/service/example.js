@@ -16,6 +16,7 @@ class ExampleService extends Service {
    * test
    */
   async test(args) {
+    console.log(args)
     let obj = {
       status:'ok',
       params: args

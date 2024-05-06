@@ -14,12 +14,12 @@ const constantRouterMap = [
         name: 'AnimeHomeIndex',
         component: () => import('@/views/anime/home/Home.vue')
       },
-      {
-        path: '/video',
-        name: 'AnimeVideoIndex',
-        component: () => import('@/views/anime/video/Video.vue')
-      },
     ]
+  },
+  {
+    path: '/video',
+    name: 'AnimeVideoIndex',
+    component: () => import('@/views/anime/video/Video.vue')
   },
   {
     path: '/login',

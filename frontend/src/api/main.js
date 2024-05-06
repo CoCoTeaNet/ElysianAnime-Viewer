@@ -5,6 +5,8 @@
  */
 const ipcApiRoute = {
   test: 'controller.example.test',
+  createWindow: 'controller.window.createWindow',
+  createMpv: 'controller.window.createMpv',
 }
 
 export {
