@@ -1,57 +1,58 @@
 <template>
-  <el-menu :collapse="true" :ellipsis="false" class="layout-aside-menu" popper-effect="dark">
-    <el-menu-item index="1">
-      <el-icon :size="iconSize">
+  <div class="layout-aside-menu">
+    <ani-aside-item>
+      <template #default>
         <home-filled/>
-      </el-icon>
-      <template #title>首页</template>
-    </el-menu-item>
+      </template>
+    </ani-aside-item>
 
-    <el-menu-item index="2">
-      <el-icon :size="iconSize">
+    <ani-aside-item>
+      <template #default>
         <share/>
-      </el-icon>
-      <template #title>推荐栏目</template>
-    </el-menu-item>
+      </template>
+    </ani-aside-item>
 
-    <el-menu-item index="3">
-      <el-icon :size="iconSize">
+    <ani-aside-item>
+      <template #default>
         <star/>
-      </el-icon>
-      <template #title>我的追番</template>
-    </el-menu-item>
+      </template>
+    </ani-aside-item>
 
-    <el-menu-item index="4">
+    <div class="flex-grow"></div>
+
+    <div>
       <el-avatar size="small" :src="userAvatar ? userAvatar : ''"></el-avatar>
-      <template #title>我的信息</template>
-    </el-menu-item>
+    </div>
 
-    <el-menu-item index="5">
-      <el-icon :size="iconSize">
+    <ani-aside-item>
+      <template #default>
         <message/>
-      </el-icon>
-      <template #title>通知消息</template>
-    </el-menu-item>
+      </template>
+    </ani-aside-item>
 
-    <el-menu-item index="6">
-      <el-icon :size="iconSize">
+    <ani-aside-item>
+      <template #default>
         <setting/>
-      </el-icon>
-      <template #title>设置</template>
-    </el-menu-item>
-  </el-menu>
+      </template>
+    </ani-aside-item>
+  </div>
 </template>
 
 <script setup>
 import {HomeFilled, Message, Setting, Share, Star} from "@element-plus/icons-vue";
 import userAvatar from "@/assets/svg-source/default-avatar.svg";
+import AniAsideItem from "@/layout/aside/child/AniAsideItem.vue";
 
-const iconSize = 24;
+
 </script>
 
 <style scoped>
 .layout-aside-menu {
+  display: flex;
+  flex-direction: column;
   justify-content: space-between;
+  height: 100%;
+  background-color: #2c3e50;
 }
 
 .flex-grow {
