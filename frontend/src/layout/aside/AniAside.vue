@@ -4,23 +4,26 @@
       <template #default>
         <home-filled/>
       </template>
+      <template #text>首页</template>
     </ani-aside-item>
 
     <ani-aside-item>
       <template #default>
         <share/>
       </template>
+      <template #text>推荐</template>
     </ani-aside-item>
 
     <ani-aside-item>
       <template #default>
         <star/>
       </template>
+      <template #text>收藏</template>
     </ani-aside-item>
 
     <div class="flex-grow"></div>
 
-    <div>
+    <div style="margin-bottom: 0.5em">
       <el-avatar size="small" :src="userAvatar ? userAvatar : ''"></el-avatar>
     </div>
 
@@ -52,7 +55,7 @@ import AniAsideItem from "@/layout/aside/child/AniAsideItem.vue";
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-  background-color: #2c3e50;
+  background-color: whitesmoke;
 }
 
 .flex-grow {
