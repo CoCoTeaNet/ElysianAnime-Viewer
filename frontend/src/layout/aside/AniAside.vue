@@ -16,14 +16,14 @@
 
     <ani-aside-item>
       <template #default>
-        <star/>
+        <star-filled/>
       </template>
       <template #text>收藏</template>
     </ani-aside-item>
 
     <div class="flex-grow"></div>
 
-    <div style="margin-bottom: 0.5em">
+    <div style="margin-bottom: 0.5em" @click="loginInfo()">
       <el-avatar size="small" :src="userAvatar ? userAvatar : ''"></el-avatar>
     </div>
 
@@ -42,11 +42,15 @@
 </template>
 
 <script setup>
-import {HomeFilled, Message, Setting, Share, Star} from "@element-plus/icons-vue";
+import {HomeFilled, Message, Setting, Share, StarFilled} from "@element-plus/icons-vue";
 import userAvatar from "@/assets/svg-source/default-avatar.svg";
 import AniAsideItem from "@/layout/aside/child/AniAsideItem.vue";
+import router from "@/router";
 
-
+const loginInfo = () => {
+  console.log('login')
+  router.push({'name': 'LoginIndex'});
+}
 </script>
 
 <style scoped>

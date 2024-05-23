@@ -1,16 +1,17 @@
 <template>
-  <div class="home">
-    <h1>home form</h1>
-    <el-button @click="onClick()">打开新窗口</el-button>
+  <div class="home-container">
+    <ani-card v-for="i in 40" @click="toOpusDetail">
+      {{i}}
+    </ani-card>
   </div>
 </template>
 
 <script setup>
-
 import {ipcApiRoute} from "@/api/main";
 import {ipc} from "@/utils/ipcRenderer";
+import AniCard from "@/components/ani-card/AniCard.vue";
 
-const onClick = () => {
+const toOpusDetail = () => {
   let args = {
     type: 'vue',
     content: '/video',
@@ -25,5 +26,8 @@ const onClick = () => {
 </script>
 
 <style scoped>
-
+.home-container {
+  display: flex;
+  flex-wrap: wrap;
+}
 </style>

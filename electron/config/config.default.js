@@ -23,8 +23,8 @@ module.exports = (appInfo) => {
    * 主窗口
    */
   config.windowsOption = {
-    title: 'EE框架',
-    width: 1160,
+    title: 'JAnime',
+    width: 1190,
     height: 670,
     minWidth: 400,
     minHeight: 300,

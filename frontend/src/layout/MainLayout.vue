@@ -3,7 +3,10 @@
     <el-aside width="63px"><ani-aside/></el-aside>
 
     <el-container>
-      <el-header><ani-header/></el-header>
+      <el-header class="main-layout-header">
+        <el-text>JAnime</el-text>
+        <ani-header/>
+      </el-header>
 
       <el-main>
         <router-view v-slot="{Component}">
@@ -26,6 +29,13 @@ import AniAside from "@/layout/aside/AniAside.vue";
 
 <!--私有样式-->
 <style scoped>
+.main-layout-header {
+  border-bottom: 1px solid #DCDFE6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .el-aside {
   overflow-x: hidden;
   transition: width 200ms;

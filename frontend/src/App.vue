@@ -17,7 +17,7 @@ html, body {
   padding: 0;
 }
 
-body {
+html, body {
   height: 100%;
 }
 </style>
