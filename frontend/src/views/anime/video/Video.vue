@@ -1,9 +1,13 @@
 <template>
   <div class="video-container">
 
-    <div class="mpvjs-layout" @mouseover="showControl = true" @mouseleave="showControl = false">
+    <div class="mpvjs-layout"
+         @mouseover="showControl = true"
+         @mouseleave="showControl = false"
+         @mousemove="onMouseMove"
+         @mouseenter="onMouseEnter">
 
-      <div class="mpvjs-box">
+      <div :class="`mpvjs-box ${hideCursor ? 'hide-cursor' : ''}`">
         <embed id="mpvjs" type="application/x-mpvjs"/>
       </div>
 
@@ -64,8 +68,12 @@ const iconSize = 22;
 
 let mpv;
 
-// 是否展示控制面板
+let timeout;
+
+// 展示控制面板
 const showControl = ref(true);
+// 隐藏指针
+const hideCursor = ref(false);
 // 播放与暂停
 const playing = ref(false);
 // 音量
@@ -89,17 +97,52 @@ const play = () => {
 
 const onVolumeChange = (value) => {
 }
+
+const onMouseMove = () => {
+  if (!showControl.value) {
+    showControl.value = true;
+  } else {
+    mouseEnterTimeout();
+  }
+}
+
+const onMouseEnter = () => {
+  mouseEnterTimeout();
+}
+
+const mouseEnterTimeout = () => {
+  if (timeout != null) {
+    clearTimeout(timeout);
+  }
+  timeout = setTimeout(() => {
+    showControl.value = false;
+    hideCursor.value = true;
+  }, 2500);
+}
 </script>
 
 <style scoped>
+/**
+ * 修改组件样式
+ */
 .el-slider {
   --el-slider-height: 4px;
   --el-slider-button-size: 12px;
 }
 
+/**
+ * 隐藏视频控制面板
+ */
 .hide {
   opacity: 0;
   pointer-events: none;
+}
+
+/**
+ * 隐藏指针
+ */
+.hide-cursor {
+  cursor: none;
 }
 
 .video-container {
@@ -124,8 +167,12 @@ const onVolumeChange = (value) => {
 .mpvjs-box {
   width: 100%;
   height: 100%;
+  margin-top: 3.5em;
 }
 
+/**
+ * 视频播放器默认样式
+ */
 .mpvjs-control-layout {
   background-color: rgb(44 44 44 / 29%);
   z-index: 999;
