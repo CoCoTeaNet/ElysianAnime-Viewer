@@ -2,12 +2,11 @@
   <el-space direction="vertical"
             :size="2"
             class="layout-aside-menu-item"
-            @mouseenter="onMouseenter"
             @mouseleave="onMouseleave">
-    <el-icon :size="iconSize" :color="iconColor">
+    <el-icon :size="iconSize" :color="props.active ? activeColor : defaultColor">
       <slot name="default"></slot>
     </el-icon>
-    <el-text :style="`color:${iconColor}`"
+    <el-text :style="`color:${props.active ? activeColor : defaultColor}`"
              size="small" tag="b">
       <slot name="text"></slot>
     </el-text>
@@ -15,20 +14,20 @@
 </template>
 
 <script setup>
-import {ref} from "vue";
+import {ref, watch} from "vue";
+
+const props = defineProps({
+  active: {type: Boolean, default: false},
+});
 
 const defaultColor = '#303133';
+const activeColor = '#d40046';
 const iconSize = 24;
 const iconColor = ref(defaultColor);
-
-const onMouseenter = () => {
-  iconColor.value = '#d40046';
-}
 
 const onMouseleave = () => {
   iconColor.value = defaultColor;
 }
-
 </script>
 
 <style scoped>
