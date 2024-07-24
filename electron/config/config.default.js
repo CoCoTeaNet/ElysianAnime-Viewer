@@ -24,8 +24,8 @@ module.exports = (appInfo) => {
    */
   config.windowsOption = {
     title: 'JAnime',
-    width: 1190,
-    height: 670,
+    width: 1372,
+    height: 841,
     minWidth: 400,
     minHeight: 300,
     webPreferences: {

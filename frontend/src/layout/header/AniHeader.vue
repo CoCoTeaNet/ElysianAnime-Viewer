@@ -1,11 +1,13 @@
 <template>
-  <div style="display: flex; justify-content: right">
-    <el-input v-model="searchStr" placeholder="番剧搜索~~~" style="max-width: 32em">
-      <template #append>
-        <el-button :icon="Search"/>
+  <div>
+    <el-input v-model="searchStr" placeholder="搜索番剧~~~">
+      <template #prefix>
+        <el-icon>
+          <Search/>
+        </el-icon>
       </template>
-      <template #prepend>
-        <el-select v-model="select" placeholder="追番状态" style="width: 101px">
+      <template #append>
+        <el-select v-model="select" placeholder="进度" style="width: 80px">
           <el-option label="未看" value="1"/>
           <el-option label="在看" value="2"/>
           <el-option label="已看" value="3"/>
