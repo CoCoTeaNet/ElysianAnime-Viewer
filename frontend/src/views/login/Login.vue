@@ -1,12 +1,12 @@
 <template>
   <div class="login-container">
     <div class="login-layout">
-      <div class="login-box-left">
-
-      </div>
 
       <div class="login-box-right">
         <el-form class="login-box-form">
+          <el-form-item>
+            <h4 style="padding: 0;margin: 0;">LOGIN IN MY JANIME ~~~</h4>
+          </el-form-item>
           <el-form-item>
             <el-input placeholder="账号" :prefix-icon="User"/>
           </el-form-item>
@@ -20,6 +20,10 @@
             <el-button :loading="loading" style="width: 100%" type="primary" @click="doLogin">登录</el-button>
           </el-form-item>
         </el-form>
+      </div>
+
+      <div class="login-box-left">
+
       </div>
     </div>
   </div>

@@ -28,7 +28,13 @@
       </el-icon>
     </el-menu-item>
 
-    <el-menu-item index="5">
+    <el-menu-item index="5" @click="go('AnimeUserIndex')">
+      <el-icon>
+        <user/>
+      </el-icon>
+    </el-menu-item>
+
+    <el-menu-item index="6">
       <el-icon>
         <setting/>
       </el-icon>
@@ -38,7 +44,12 @@
 </template>
 
 <script setup>
-import {HomeFilled, Message, Setting, Share, StarFilled} from "@element-plus/icons-vue";
+import {HomeFilled, Message, Setting, Share, StarFilled, User} from "@element-plus/icons-vue";
+import router from "@/router";
+
+const go = (routeName) => {
+  router.push({name: routeName});
+}
 </script>
 
 <style scoped>

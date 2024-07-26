@@ -14,6 +14,11 @@ const constantRouterMap = [
         name: 'AnimeHomeIndex',
         component: () => import('@/views/anime/home/Home.vue')
       },
+      {
+        path: '/user',
+        name: 'AnimeUserIndex',
+        component: () => import('@/views/anime/user/User.vue')
+      },
     ]
   },
   {
