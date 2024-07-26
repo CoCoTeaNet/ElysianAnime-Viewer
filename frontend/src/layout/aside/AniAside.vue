@@ -1,76 +1,63 @@
 <template>
-  <div class="layout-aside-menu">
-    <ani-aside-item :active="activeItemIndex === 1" @click="onSelected(1, 'AnimeHomeIndex')">
-      <template #default>
-        <home-filled/>
-      </template>
-      <template #text>首页</template>
-    </ani-aside-item>
-
-    <ani-aside-item :active="activeItemIndex === 2" @click="onSelected(2, 'AnimeHomeIndex')">
-      <template #default>
-        <share/>
-      </template>
-      <template #text>推荐</template>
-    </ani-aside-item>
-
-    <ani-aside-item :active="activeItemIndex === 3" @click="onSelected(3, 'AnimeHomeIndex')">
-      <template #default>
-        <star-filled/>
-      </template>
-      <template #text>收藏</template>
-    </ani-aside-item>
-
-    <div class="flex-grow"></div>
-
-    <div style="margin-bottom: 0.5em" @click="loginInfo()">
-      <el-avatar size="small" :src="userAvatar ? userAvatar : ''"></el-avatar>
+  <el-menu class="new-el-menu--sidebar" collapse default-active="1">
+    <div class="menu-logo">
+      <img src="@/assets/logo.png" style="width: 36px" alt="logo">
     </div>
 
-    <ani-aside-item>
-      <template #default>
-        <message/>
-      </template>
-    </ani-aside-item>
+    <el-menu-item index="1">
+      <el-icon>
+        <home-filled/>
+      </el-icon>
+    </el-menu-item>
 
-    <ani-aside-item>
-      <template #default>
+    <el-menu-item index="2">
+      <el-icon>
+        <star-filled/>
+      </el-icon>
+    </el-menu-item>
+
+    <el-menu-item index="3">
+      <el-icon>
+        <share/>
+      </el-icon>
+    </el-menu-item>
+
+    <el-menu-item index="4">
+      <el-icon>
+        <message/>
+      </el-icon>
+    </el-menu-item>
+
+    <el-menu-item index="5">
+      <el-icon>
         <setting/>
-      </template>
-    </ani-aside-item>
-  </div>
+      </el-icon>
+    </el-menu-item>
+
+  </el-menu>
 </template>
 
 <script setup>
 import {HomeFilled, Message, Setting, Share, StarFilled} from "@element-plus/icons-vue";
-import userAvatar from "@/assets/svg-source/default-avatar.svg";
-import AniAsideItem from "@/layout/aside/child/AniAsideItem.vue";
-import router from "@/router";
-import {ref} from "vue";
-
-const activeItemIndex = ref(1);
-
-const onSelected = (val, viewName) => {
-  activeItemIndex.value = val;
-  router.push({name: viewName});
-}
-
-const loginInfo = () => {
-  console.log('login')
-  router.push({'name': 'LoginIndex'});
-}
 </script>
 
 <style scoped>
-.layout-aside-menu {
+.menu-logo {
+  width: 100%;
+  cursor: pointer;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-  background-color: whitesmoke;
+  justify-content: center;
+  padding: 1em 0 0.5em 0;
 }
 
-.flex-grow {
-  flex-grow: 1;
+/* 自定义菜单激活状态样式 */
+.el-menu-item.is-active {
+  color: var(--el-menu-hover-text-color);
+  background-color: var(--el-menu-hover-bg-color);
+}
+
+/* 菜单的背景颜色透明 */
+.el-menu {
+  background-color: rgba(0, 0, 0, 0);
 }
 </style>

@@ -4,7 +4,7 @@
     <div class="ani-card-cover">
       <div class="ani-card-cover-text">
         <div></div>
-        <el-text>01 / 12</el-text>
+        <el-text style="margin-right: 3px">01 / 12</el-text>
       </div>
     </div>
 

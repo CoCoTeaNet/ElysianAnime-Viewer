@@ -1,10 +1,19 @@
 <template>
   <el-container style="height: 100vh">
-    <el-aside width="63px"><ani-aside/></el-aside>
+    <el-aside width="63px" class="main-layout-aside">
+      <ani-aside/>
+    </el-aside>
 
     <el-container>
       <el-header class="main-layout-header">
-        <el-text>JAnime</el-text>
+        <el-breadcrumb separator="/">
+          <el-breadcrumb-item :to="{ path: '/' }">homepage</el-breadcrumb-item>
+          <el-breadcrumb-item>
+            <a href="/">promotion management</a>
+          </el-breadcrumb-item>
+          <el-breadcrumb-item>promotion list</el-breadcrumb-item>
+          <el-breadcrumb-item>promotion detail</el-breadcrumb-item>
+        </el-breadcrumb>
         <ani-header/>
       </el-header>
 
@@ -27,32 +36,15 @@ import AniHeader from "@/layout/header/AniHeader.vue";
 import AniAside from "@/layout/aside/AniAside.vue";
 </script>
 
-<!--私有样式-->
 <style scoped>
 .main-layout-header {
-  border-bottom: 1px solid #DCDFE6;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-shadow: var(--el-box-shadow-lighter);
 }
 
-.el-aside {
-  overflow-x: hidden;
-  transition: width 200ms;
-}
-
-/* 可以设置不同的进入和离开动画 */
-/* 设置持续时间和动画函数 */
-.slide-fade-enter-active {
-  transition: all .6s ease;
-}
-
-.slide-fade-leave-active {
-  transition: all .3s cubic-bezier(0.42, 0, 0.58, 1);
-}
-
-.slide-fade-enter, .slide-fade-leave-to {
-  transform: translateX(10px);
-  opacity: 0;
+.main-layout-aside {
+  box-shadow: var(--el-box-shadow);
 }
 </style>
