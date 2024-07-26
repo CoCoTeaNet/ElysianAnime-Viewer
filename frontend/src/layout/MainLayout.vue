@@ -46,5 +46,6 @@ import AniAside from "@/layout/aside/AniAside.vue";
 
 .main-layout-aside {
   box-shadow: var(--el-box-shadow);
+  overflow-x: hidden;
 }
 </style>

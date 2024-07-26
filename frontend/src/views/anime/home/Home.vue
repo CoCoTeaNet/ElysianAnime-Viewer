@@ -1,7 +1,7 @@
 <template>
   <div class="home-container">
     <ani-card v-for="i in 40" @click="toOpusDetail">
-      {{i}}
+      {{ i }}
     </ani-card>
   </div>
 </template>
@@ -27,6 +27,7 @@ const toOpusDetail = () => {
 
 <style scoped>
 .home-container {
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
