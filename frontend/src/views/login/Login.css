@@ -29,7 +29,8 @@
     justify-content: center;
     align-items: center;
     background-color: rgb(255, 255, 255, 0.8);
-    margin: 8em 13em 8em 13em;
+    margin: 8em 14em 8em 14em;
+    padding: 1em;
     border-radius: 20px;
 }
 

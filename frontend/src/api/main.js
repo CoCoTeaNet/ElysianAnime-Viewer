@@ -4,7 +4,8 @@
  * Definition of communication channels between main process and rendering process
  */
 const ipcApiRoute = {
-  test: 'controller.example.test',
+  test: 'controller.client.test',
+  curl: 'controller.client.curl',
   createWindow: 'controller.window.createWindow',
   createMpv: 'controller.window.createMpv',
 }

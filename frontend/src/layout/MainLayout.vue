@@ -31,9 +31,17 @@
 </template>
 
 <script setup>
-
 import AniHeader from "@/layout/header/AniHeader.vue";
 import AniAside from "@/layout/aside/AniAside.vue";
+import {onMounted} from "vue";
+import {ipc} from "@/utils/ipcRenderer";
+import {ipcApiRoute} from "@/api/main";
+
+onMounted(() => {
+  ipc.invoke(ipcApiRoute.test).then(id => {
+    console.log('loaded:', id);
+  });
+})
 </script>
 
 <style scoped>

@@ -3,6 +3,7 @@
 const { Controller } = require('ee-core');
 const Log = require('ee-core/log');
 const Services = require('ee-core/services');
+const Config = require('ee-core/config');
 
 /**
  * WindowController
