@@ -6,6 +6,8 @@
 const ipcApiRoute = {
   test: 'controller.client.test',
   curl: 'controller.client.curl',
+  cache: 'controller.client.cache',
+  getCache: 'controller.client.getCache',
   createWindow: 'controller.window.createWindow',
   createMpv: 'controller.window.createMpv',
 }

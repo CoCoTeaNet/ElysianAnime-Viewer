@@ -21,7 +21,12 @@
           <el-form-item prop="captcha">
             <el-row gutter="8" align="middle">
               <el-col :span='16'>
-                <el-input v-model="loginForm.captcha" show-word-limit placeholder="验证码" :prefix-icon="Connection"/>
+                <el-input v-model="loginForm.captcha"
+                          show-word-limit
+                          placeholder="验证码"
+                          :prefix-icon="Connection"
+                          @keydown.enter="doLogin(loginFormRef)"
+                />
               </el-col>
               <el-col :span='8'>
                 <el-image @click="loadCaptcha" style="cursor: pointer" :src="captchaBase64"/>
@@ -50,6 +55,13 @@ import router from "@/router";
 import sysLoginApi from "@/api/http/sys-login-api";
 import {ipcApiRoute} from "@/api/main";
 import {ipc} from "@/utils/ipcRenderer";
+import {getSm2} from "@/utils/smUtil";
+import {ResultCode} from "@/utils/requestUtil";
+import {useUserStore} from "@/stores/user";
+import Toast from "@/components/global/toast";
+
+const store = useUserStore();
+const sm2 = getSm2();
 
 const loginFormRef = ref();
 const loading = ref(false);
@@ -68,6 +80,8 @@ onMounted(() => {
   ipc.invoke(ipcApiRoute.test, '').then(id => {
     console.log('[test] id:', id);
   });
+
+  store.save()
 
   loadCaptcha();
 });
@@ -98,17 +112,38 @@ const rules = reactive({
 });
 
 const doLogin = async (formEl) => {
-  loading.value = true;
-  // router.push({'name': 'AnimeHomeIndex'});
-
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
-      let res = sysLoginApi.login(loginForm);
+      loading.value = true;
+      // see https://github.com/JuneAndGreen/sm-crypto/issues/72
+      let encPassword = '04' + sm2.doEncrypt(loginForm.password, loginForm.publicKey);
+      let loginParams = {password: ''};
+      Object.assign(loginParams, loginForm);
+      loginParams.password = encPassword;
+
+      sysLoginApi.login(loginParams).then(res => {
+        let data = res.data;
+        if (data.code === ResultCode.SUCCESS) {
+          Toast.success('登录成功');
+          store.saveToken(data.data);
+          setTimeout(() => {
+            router.push({name: 'AnimeHomeIndex'});
+          }, 1000);
+        } else {
+          Toast.error(data.message);
+          loadCaptcha();
+        }
+        loading.value = false;
+      }).catch(err => {
+        console.log(err);
+        Toast.error('网络连接错误');
+        loading.value = false;
+      });
     } else {
-      console.log('error submit!', fields)
+      console.log('error submit!', fields);
+      Toast.warning('您的输入不合法，请检查！');
     }
-    loading.value = false;
   });
 }
 </script>

@@ -36,11 +36,16 @@ import AniAside from "@/layout/aside/AniAside.vue";
 import {onMounted} from "vue";
 import {ipc} from "@/utils/ipcRenderer";
 import {ipcApiRoute} from "@/api/main";
+import {useUserStore} from "@/stores/user";
+
+const store = useUserStore();
 
 onMounted(() => {
   ipc.invoke(ipcApiRoute.test).then(id => {
     console.log('loaded:', id);
   });
+
+  store.loadToken();
 })
 </script>
 

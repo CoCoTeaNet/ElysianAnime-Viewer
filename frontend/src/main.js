@@ -3,7 +3,8 @@ import App from './App.vue';
 import './assets/global.less';
 import components from './components/global';
 import Router from './router/index';
-import { createPinia } from 'pinia'
+import { createPinia } from 'pinia';
+import 'element-plus/dist/index.css'
 
 const app = createApp(App)
 const pinia = createPinia()

@@ -20,6 +20,14 @@ class HttpClientController extends Controller {
         Log.info('curl >>>>>', result);
         return result;
     }
+
+    async cache(args) {
+        await Services.get('client').cache(JSON.parse(args));
+    }
+
+    async getCache(args) {
+        return await Services.get('client').getCache(args);
+    }
 }
 
 HttpClientController.toString = () => '[class HttpClientController]';

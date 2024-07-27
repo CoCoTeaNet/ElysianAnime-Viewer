@@ -1,4 +1,6 @@
-import { defineStore } from 'pinia'
+import {defineStore} from 'pinia'
+import {ipc} from "@/utils/ipcRenderer";
+import {ipcApiRoute} from "@/api/main";
 
 /**
  * 定义一个用户信息store
@@ -11,15 +13,29 @@ export const useUserStore = defineStore('user', {
 
     getters: {
         token: (state) => state.token,
-        userinfo: (state) => state.userinfo
+        userinfo: (state) => state.userinfo,
     },
 
     actions: {
-        saveToken: (state, token) => {
-            state.token = token;
+        loadToken() {
+            ipc.invoke(ipcApiRoute.getCache, 'token').then(resp => {
+                this.token = resp;
+            });
         },
-        saveUserInfo: (state, userinfo) => {
-            state.userinfo = userinfo;
+        save() {
+            console.log('this.token='+this.token)
+        },
+        saveToken(token) {
+            this.token = token;
+            let args = {
+                key: 'token',
+                value: token
+            }
+            ipc.invoke(ipcApiRoute.cache, args).then((resp) => {
+            });
+        },
+        saveUserinfo(userinfo) {
+            this.userinfo = userinfo;
         }
     }
 })

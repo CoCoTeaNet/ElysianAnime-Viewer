@@ -1,16 +1,14 @@
 import router from "@/router";
-import {storeToRefs} from 'pinia';
 import {useUserStore} from "@/stores/user";
 import {ipcApiRoute} from "@/api/main";
 import {ipc} from "@/utils/ipcRenderer";
 
 const store = useUserStore();
-const {token} = storeToRefs(store);
 
 export const post = 'POST';
 export const get = 'GET';
 
-const ResultCode = {
+export const ResultCode = {
     /**
      * 成功
      */
@@ -42,7 +40,7 @@ const ResultCode = {
 }
 
 const defaultOptions = {
-    method: get,
+    method: 'GET',
     data: {},
     dataType: 'json',
     timeout: 60000,
@@ -50,7 +48,7 @@ const defaultOptions = {
         "Content-Type": 'application/json;charset=utf-8',
         "sa-token": '-'
     }
-};
+}
 
 /**
  * 封装axios
@@ -68,14 +66,11 @@ export async function request(url, data, method) {
         url: '/api/' + url,
         options: options
     }
-    console.log(args);
 
+    console.log(`requestUtil[${url}] >>>>> args:`, args);
     let res = await ipc.invoke(ipcApiRoute.curl, JSON.stringify(args));
-    console.log('request >>>>>', url, res);
+    console.log(`requestUtil[${url}] >>>>> res:`, res);
 
-    // if (res.code === ResultCode.SUCCESS) {
-    //
-    // }
     return res;
 }
 
