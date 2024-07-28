@@ -1,8 +1,9 @@
 <template>
   <div class="ani-card-container">
 
-    <div class="ani-card-cover"
+    <div class="ani-card-cover pointer-css"
          :style="`background-image: url(${cardView.cover})`"
+         @click="$emit('onTitleClick', cardData.id)"
     >
       <div class="ani-card-cover-text">
         <div></div>
@@ -14,10 +15,19 @@
 
     <div style="text-align: left;margin-top: 3px">
       <div class="ani-card-title">
-        <el-text type="primary" truncated>{{cardView.title}}</el-text>
+        <el-text class="pointer-css"
+                 type="primary"
+                 truncated
+                 @click="$emit('onTitleClick', cardData.id)">
+          {{cardView.title}}
+        </el-text>
         <el-icon style="transform: rotate(90deg);"><MoreFilled /></el-icon>
       </div>
-      <el-text size="small">{{cardView.placeholder}}</el-text>
+      <el-text size="small"
+               class="pointer-css"
+               @click="$emit('onTitleClick', cardData.id)">
+        {{cardView.placeholder}}
+      </el-text>
     </div>
 
   </div>
@@ -30,16 +40,13 @@ import {reactive} from "vue";
 const props = defineProps(['cardData', 'coverBaseUrl']);
 
 const cardView = reactive({
+  opusId: props.cardData.id,
   title: props.cardData.nameCn,
   placeholder: props.cardData.launchStart,
   cover: props.coverBaseUrl + props.cardData.coverUrl,
   episodes: props.cardData.episodes,
   currentEpisodes: props.cardData.readingNum,
 });
-
-const toOpusDetail = () => {
-
-}
 </script>
 
 <style scoped>
@@ -58,7 +65,9 @@ const toOpusDetail = () => {
   flex-direction: column;
   justify-content: flex-end;
   background-color: #2c3e50;
-  background-size: contain;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
   border-radius: 4px;
 }
 
@@ -70,5 +79,17 @@ const toOpusDetail = () => {
 .ani-card-title {
   display: flex;
   justify-content: space-between;
+}
+
+.pointer-css {
+  cursor: pointer;
+}
+
+.pointer-css:hover {
+  font-weight: bold;
+}
+
+.ani-card-cover:hover {
+  box-shadow: var(--el-box-shadow-dark);
 }
 </style>

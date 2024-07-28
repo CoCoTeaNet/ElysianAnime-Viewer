@@ -4,7 +4,7 @@
         v-for="opus in opusPage.records"
         :card-data="opus"
         :cover-base-url="coverApiBase"
-        @click="toOpusDetail"
+        @onTitleClick="toOpusDetail"
     />
   </div>
 </template>
@@ -40,16 +40,17 @@ onMounted(() => {
   });
 });
 
-const toOpusDetail = () => {
-  let args = {
-    type: 'vue',
-    content: '/video',
-    windowName: 'AnimeVideoIndex',
-    windowTitle: 'mpv-player'
-  };
-  ipc.invoke(ipcApiRoute.createMpv, args).then(id => {
-    console.log('[createWindow] id:', id);
-  });
+const toOpusDetail = (opusId) => {
+  // let args = {
+  //   type: 'vue',
+  //   content: '/video',
+  //   windowName: 'AnimeVideoIndex',
+  //   windowTitle: 'mpv-player'
+  // };
+  // ipc.invoke(ipcApiRoute.createMpv, args).then(id => {
+  //   console.log('[createWindow] id:', id);
+  // });
+  console.log(opusId)
 }
 
 const loadOpus = () => {

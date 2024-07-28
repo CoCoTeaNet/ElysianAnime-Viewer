@@ -77,9 +77,9 @@ export async function request(url, data, method) {
     console.log(`requestUtil[${url}] >>>>> args:`, args);
     let res = await ipc.invoke(ipcApiRoute.curl, JSON.stringify(args));
 
-    // if (res.data.code === ResultCode.NOT_LOGIN) {
-    //     await router.push({name: 'LoginIndex'});
-    // }
+    if (res.data.code === ResultCode.NOT_LOGIN) {
+        await router.push({name: 'LoginIndex'});
+    }
 
     console.log(`requestUtil[${url}] >>>>> res:`, res);
 

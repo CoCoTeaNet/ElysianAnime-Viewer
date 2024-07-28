@@ -23,8 +23,8 @@ module.exports = (appInfo) => {
    * 主窗口
    */
   config.windowsOption = {
-    title: 'JAnime',
-    width: 1372,
+    title: 'JAnimeDesk',
+    width: 1358,
     height: 841,
     minWidth: 400,
     minHeight: 300,
