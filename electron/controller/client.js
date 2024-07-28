@@ -23,6 +23,7 @@ class HttpClientController extends Controller {
 
     async cache(args) {
         await Services.get('client').cache(JSON.parse(args));
+        return 'ok.';
     }
 
     async getCache(args) {

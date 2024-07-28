@@ -37,7 +37,7 @@ class ClientService extends Service {
 
     async cache(args) {
         if (args.key) {
-            jdb.setItem(args.key, args.value)
+            jdb.setItem(args.key, args.value);
         } else {
             Log.warn('unknown cache key');
         }

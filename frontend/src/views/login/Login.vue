@@ -80,9 +80,6 @@ onMounted(() => {
   ipc.invoke(ipcApiRoute.test, '').then(id => {
     console.log('[test] id:', id);
   });
-
-  store.save()
-
   loadCaptcha();
 });
 

@@ -11,19 +11,12 @@ export const useUserStore = defineStore('user', {
         userinfo: {}
     }),
 
-    getters: {
-        token: (state) => state.token,
-        userinfo: (state) => state.userinfo,
-    },
-
     actions: {
         loadToken() {
+            console.log('token='+this.token)
             ipc.invoke(ipcApiRoute.getCache, 'token').then(resp => {
                 this.token = resp;
             });
-        },
-        save() {
-            console.log('this.token='+this.token)
         },
         saveToken(token) {
             this.token = token;
@@ -31,7 +24,8 @@ export const useUserStore = defineStore('user', {
                 key: 'token',
                 value: token
             }
-            ipc.invoke(ipcApiRoute.cache, args).then((resp) => {
+            ipc.invoke(ipcApiRoute.cache, JSON.stringify(args)).then((resp) => {
+                console.log('saveToken >>> ' + resp);
             });
         },
         saveUserinfo(userinfo) {
