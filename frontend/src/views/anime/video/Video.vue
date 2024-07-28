@@ -60,14 +60,15 @@
 
 <script setup>
 import Mpv from "@/views/anime/video/mpv";
-import {onMounted, ref, nextTick} from "vue";
+import {onMounted, ref, nextTick, watch,} from "vue";
 import {FullScreen, Microphone, Mute, Setting, VideoPause, VideoPlay} from "@element-plus/icons-vue";
+import {useRoute} from "vue-router";
 
-const url = 'http://ani.live1024.cn:5000/api/anime/opus/media/1154530973317861376?resName=01.mkv';
+const route = useRoute();
+const url = '';
 const iconSize = 22;
 
 let mpv;
-
 let timeout;
 
 // 展示控制面板
@@ -80,7 +81,14 @@ const playing = ref(false);
 const volume = ref(50);
 
 onMounted(() => {
+  console.log(route)
 });
+
+const onOpusIdChange = (opusId) => {
+  console.log(opusId);
+}
+
+watch(() => route.query.opusId, onOpusIdChange, {immediate: true});
 
 nextTick(() => {
   mpv = new Mpv(document.getElementById("mpvjs"));

@@ -41,15 +41,16 @@ onMounted(() => {
 });
 
 const toOpusDetail = (opusId) => {
-  // let args = {
-  //   type: 'vue',
-  //   content: '/video',
-  //   windowName: 'AnimeVideoIndex',
-  //   windowTitle: 'mpv-player'
-  // };
-  // ipc.invoke(ipcApiRoute.createMpv, args).then(id => {
-  //   console.log('[createWindow] id:', id);
-  // });
+  let args = {
+    type: 'vue',
+    content: '/video',
+    windowName: 'AnimeVideoIndex',
+    windowTitle: 'mpv-player',
+    opusId: opusId
+  };
+  ipc.invoke(ipcApiRoute.createMpv, args).then(id => {
+    console.log('[createWindow] id:', id);
+  });
   console.log(opusId)
 }
 

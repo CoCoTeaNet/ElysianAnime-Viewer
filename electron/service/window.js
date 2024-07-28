@@ -16,6 +16,8 @@ const {app} = require("electron");
  */
 class WindowService extends Service {
 
+    windowMap = new Map();
+
     constructor(ctx) {
         super(ctx);
     }
@@ -28,7 +30,7 @@ class WindowService extends Service {
      * 打开新窗口
      */
     createWindow(args) {
-        const {type, content, windowName, windowTitle} = args;
+        const {type, content, windowName, windowTitle, opusId} = args;
         let contentUrl = null;
         if (type === 'html') {
             contentUrl = path.join('file://', electronApp.getAppPath(), content)
@@ -49,21 +51,33 @@ class WindowService extends Service {
             Log.warn('unknown type');
         }
 
+        contentUrl = contentUrl + "?opusId=" + opusId
+
         Log.info('contentUrl: ', contentUrl);
         let opt = {
             title: windowTitle,
             webPreferences: {plugins: true},
         }
-        const win = Addon.get('window').create(windowName, opt);
-        const winContentsId = win.webContents.id;
+
+        let windowAddon = Addon.get('window');
+        let win;
+
+        let winCid = windowAddon.getWCid(windowName);
+        if (winCid) {
+            win = this.windowMap.get(winCid);
+        } else {
+            win = windowAddon.create(windowName, opt);
+            this.windowMap.set(win.webContents.id, win);
+        }
 
         // load page
-        win.loadURL(contentUrl);
+        win.loadURL(contentUrl).then(r => {});
+        win.moveTop();
 
         if (isDev()) {
             win.openDevTools();
         }
-        return winContentsId;
+        return win.webContents.id;
     }
 
 }
