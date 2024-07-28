@@ -4,7 +4,7 @@
       <img src="@/assets/logo.png" style="width: 36px" alt="logo">
     </div>
 
-    <el-menu-item index="1">
+    <el-menu-item index="1" @click="go('AnimeHomeIndex')">
       <el-icon>
         <home-filled/>
       </el-icon>

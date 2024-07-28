@@ -12,11 +12,14 @@ export const useUserStore = defineStore('user', {
     }),
 
     actions: {
-        loadToken() {
-            console.log('token='+this.token)
-            ipc.invoke(ipcApiRoute.getCache, 'token').then(resp => {
-                this.token = resp;
-            });
+        async loadToken() {
+            let token = await ipc.invoke(ipcApiRoute.getCache, 'token');
+            if (token) {
+                this.token = token;
+            } else {
+                this.token = 'Empty';
+            }
+            console.log('load token finish, token: ' + this.token);
         },
         saveToken(token) {
             this.token = token;

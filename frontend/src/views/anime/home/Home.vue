@@ -1,15 +1,44 @@
 <template>
   <div class="home-container">
-    <ani-card v-for="i in 40" @click="toOpusDetail">
-      {{ i }}
-    </ani-card>
+    <ani-card
+        v-for="opus in opusPage.records"
+        :card-data="opus"
+        :cover-base-url="coverApiBase"
+        @click="toOpusDetail"
+    />
   </div>
 </template>
 
 <script setup>
 import {ipcApiRoute} from "@/api/main";
 import {ipc} from "@/utils/ipcRenderer";
-import AniCard from "@/components/ani-card/AniCard.vue";
+import AniCard from "@/components/card/AniCard.vue";
+import aniOpusApi from "@/api/http/ani-opus-api";
+import {onMounted, reactive, ref} from "vue";
+import {ResultCode} from "@/utils/requestUtil";
+
+const coverApiBase = ref('');
+const queryModel = reactive({
+  pageNo: 1,
+  pageSize: 40,
+  hasResource: 1,
+  searchKey: "",
+  states: [],
+  years: [],
+  months: [],
+  status: [],
+});
+const opusPage = reactive({
+  records: [],
+  total: 0
+});
+
+onMounted(() => {
+  ipc.invoke(ipcApiRoute.getCache, 'janime_api_url').then(baseUrl => {
+    coverApiBase.value = baseUrl + '/api/anime/opus/cover?resName=';
+    loadOpus();
+  });
+});
 
 const toOpusDetail = () => {
   let args = {
@@ -23,6 +52,19 @@ const toOpusDetail = () => {
   });
 }
 
+const loadOpus = () => {
+  let queryParams = {};
+
+  Object.assign(queryParams, queryModel);
+
+  aniOpusApi.listByUser(queryParams).then(resp => {
+    let vo = resp.data;
+    if (vo.code === ResultCode.SUCCESS) {
+      opusPage.total = vo.data.total;
+      opusPage.records = vo.data.records;
+    }
+  });
+}
 </script>
 
 <style scoped>
@@ -30,6 +72,6 @@ const toOpusDetail = () => {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: stretch;
 }
 </style>

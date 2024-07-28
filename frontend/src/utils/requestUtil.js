@@ -5,8 +5,8 @@ import {ipc} from "@/utils/ipcRenderer";
 
 const store = useUserStore();
 
-export const post = 'POST';
-export const get = 'GET';
+const post = 'POST';
+const get = 'GET';
 
 export const ResultCode = {
     /**
@@ -46,7 +46,7 @@ const defaultOptions = {
     timeout: 60000,
     headers: {
         "Content-Type": 'application/json;charset=utf-8',
-        "sa-token": '-'
+        "Authorization": '-',
     }
 }
 
@@ -58,17 +58,29 @@ const defaultOptions = {
  * @param method 请求方法
  */
 export async function request(url, data, method) {
-    let options = defaultOptions;
+    let options = {};
+    Object.assign(options, defaultOptions);
     options.method = method;
     options.data = data;
 
+    if (!store.token) {
+        await store.loadToken();
+    }
+
+    options.headers["Authorization"] = store.token;
+
     let args = {
         url: '/api/' + url,
-        options: options
+        options: options,
     }
 
     console.log(`requestUtil[${url}] >>>>> args:`, args);
     let res = await ipc.invoke(ipcApiRoute.curl, JSON.stringify(args));
+
+    // if (res.data.code === ResultCode.NOT_LOGIN) {
+    //     await router.push({name: 'LoginIndex'});
+    // }
+
     console.log(`requestUtil[${url}] >>>>> res:`, res);
 
     return res;

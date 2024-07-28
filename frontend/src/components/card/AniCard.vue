@@ -1,19 +1,23 @@
 <template>
   <div class="ani-card-container">
 
-    <div class="ani-card-cover">
+    <div class="ani-card-cover"
+         :style="`background-image: url(${cardView.cover})`"
+    >
       <div class="ani-card-cover-text">
         <div></div>
-        <el-text style="margin-right: 3px">01 / 12</el-text>
+        <el-text style="margin-right: 3px">
+          {{cardView.currentEpisodes}} / {{cardView.episodes}}
+        </el-text>
       </div>
     </div>
 
     <div style="text-align: left;margin-top: 3px">
       <div class="ani-card-title">
-        <el-text truncated>为美好的世界献上祝福！</el-text>
+        <el-text type="primary" truncated>{{cardView.title}}</el-text>
         <el-icon style="transform: rotate(90deg);"><MoreFilled /></el-icon>
       </div>
-      <el-text size="small">2024-05-18</el-text>
+      <el-text size="small">{{cardView.placeholder}}</el-text>
     </div>
 
   </div>
@@ -21,6 +25,17 @@
 
 <script setup>
 import {MoreFilled} from "@element-plus/icons-vue";
+import {reactive} from "vue";
+
+const props = defineProps(['cardData', 'coverBaseUrl']);
+
+const cardView = reactive({
+  title: props.cardData.nameCn,
+  placeholder: props.cardData.launchStart,
+  cover: props.coverBaseUrl + props.cardData.coverUrl,
+  episodes: props.cardData.episodes,
+  currentEpisodes: props.cardData.readingNum,
+});
 
 const toOpusDetail = () => {
 
@@ -43,6 +58,7 @@ const toOpusDetail = () => {
   flex-direction: column;
   justify-content: flex-end;
   background-color: #2c3e50;
+  background-size: contain;
   border-radius: 4px;
 }
 
