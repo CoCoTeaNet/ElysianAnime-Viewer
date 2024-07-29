@@ -9,6 +9,7 @@ const {join} = require("path");
 const {getPluginEntry} = require("mpv.js");
 const path = require("path");
 const {app} = require("electron");
+const Config = require("ee-core/config");
 
 /**
  * 示例服务（service层为单例）
@@ -54,9 +55,19 @@ class WindowService extends Service {
         contentUrl = contentUrl + "?opusId=" + opusId
 
         Log.info('contentUrl: ', contentUrl);
+        let mainOpt = Config.getValue('windowsOption');
+
         let opt = {
             title: windowTitle,
-            webPreferences: {plugins: true},
+            width: mainOpt.width,
+            height: mainOpt.height,
+            minWidth: mainOpt.minWidth,
+            minHeight: mainOpt.minHeight,
+            webPreferences: {
+                plugins: true,
+                nodeIntegration: true,
+                contextIsolation: false,
+            },
         }
 
         let windowAddon = Addon.get('window');
