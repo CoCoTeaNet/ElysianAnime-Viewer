@@ -17,7 +17,7 @@ export const useUserStore = defineStore('user', {
             if (token) {
                 this.token = token;
             } else {
-                this.token = 'Empty';
+                this.token = '';
             }
             console.log('load token finish, token: ' + this.token);
         },

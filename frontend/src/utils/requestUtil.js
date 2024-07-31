@@ -46,7 +46,7 @@ const defaultOptions = {
     timeout: 60000,
     headers: {
         "Content-Type": 'application/json;charset=utf-8',
-        "Authorization": '-',
+        "Authorization": '',
     }
 }
 
