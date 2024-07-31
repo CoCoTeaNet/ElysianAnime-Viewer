@@ -1,9 +1,10 @@
 <template>
   <media-controller class="mpv-player">
     <embed id="mpvjs" type="application/x-mpvjs"/>
+    <video slot="media" style="display: none"/>
 
     <media-control-bar>
-      <media-play-button @click="onPlay"></media-play-button>
+      <media-play-button></media-play-button>
       <media-mute-button></media-mute-button>
       <media-volume-range></media-volume-range>
       <media-time-range></media-time-range>
@@ -15,12 +16,15 @@
 
 <script setup>
 import 'media-chrome';
-import {nextTick, watch} from "vue";
+import {onMounted, nextTick, watch} from "vue";
 import Mpv from "@/components/mpv-player/mpv";
 
 const props = defineProps(['videoUrl']);
 
 let mpv;
+
+onMounted(() => {
+});
 
 const playFile = (src) => {
   mpv.loadFile(src);
