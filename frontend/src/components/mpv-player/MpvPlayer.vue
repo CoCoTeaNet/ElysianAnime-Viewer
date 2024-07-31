@@ -15,23 +15,30 @@
 
 <script setup>
 import 'media-chrome';
-import {nextTick} from "vue";
+import {nextTick, watch} from "vue";
 import Mpv from "@/components/mpv-player/mpv";
 
-const url = '';
+const props = defineProps(['videoUrl']);
+
 let mpv;
 
-nextTick(() => {
-  mpv = new Mpv(document.getElementById("mpvjs"));
-  setTimeout(() => {
-    mpv.loadFile(url);
-  }, 1000);
-});
-
-const onPlay = () => {
-  console.log('play');
-  mpv.goPlay(true)
+const playFile = (src) => {
+  mpv.loadFile(src);
+  mpv.goPlay(true);
 }
+
+const onVideoSrcChange = (newVal) => {
+  if (mpv) {
+    playFile(newVal);
+    return;
+  }
+  nextTick(() => {
+    mpv = new Mpv(document.getElementById("mpvjs"));
+    playFile(newVal);
+  });
+}
+
+watch(() => props.videoUrl, onVideoSrcChange);
 </script>
 
 <style scoped>

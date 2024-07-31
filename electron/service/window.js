@@ -6,9 +6,7 @@ const Log = require('ee-core/log');
 const {isProd, getHomeDir, isDev} = require("ee-core/ps");
 const {getValue, isFileProtocol} = require("ee-core/config");
 const {join} = require("path");
-const {getPluginEntry} = require("mpv.js");
 const path = require("path");
-const {app} = require("electron");
 const Config = require("ee-core/config");
 
 /**

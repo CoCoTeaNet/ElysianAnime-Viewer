@@ -16,7 +16,6 @@ class Index extends Application {
   async ready () {
     // do some things
     // 加载mpv lib
-    const path = require("path");
     const pdir = path.join(path.dirname(require.resolve("mpv.js")), "build", "Release");
     if (process.platform !== "linux") {process.chdir(pdir);}
     app.commandLine.appendSwitch("no-sandbox");

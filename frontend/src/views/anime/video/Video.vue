@@ -2,7 +2,7 @@
   <el-row class="video-container">
 
     <el-col :span="16" class="mpvjs-layout">
-      <mpv-player/>
+      <mpv-player :video-url="videoFullUrl"/>
     </el-col>
 
     <el-col :span="8" class="video-right">
@@ -34,10 +34,10 @@
         <el-card style="max-height: 480px;text-align: left" shadow="hover">
           <template #header>
             <el-text>
-              选集 {{ opusData.readingNum }} / {{ formatUtil.fillZero(opusData.mediaList.length) }}
+              选集 {{ readingNum }} / {{ formatUtil.fillZero(opusData.mediaList.length) }}
             </el-text>
           </template>
-          <el-radio-group v-model="opusData.readingNum">
+          <el-radio-group v-model="readingNum" @change="onEpisodesChange">
             <el-radio-button
                 v-for="media in opusData.mediaList"
                 :label="media.episodes"
@@ -67,9 +67,14 @@ import aniOpusApi from "@/api/http/ani-opus-api";
 import {ResultCode} from "@/utils/requestUtil";
 import formatUtil from "@/utils/formatUtil";
 import MpvPlayer from "@/components/mpv-player/MpvPlayer.vue";
+import {ipc} from "@/utils/ipcRenderer";
+import {ipcApiRoute} from "@/api/main";
 
 const route = useRoute();
 
+const baseApiUrl = ref('');
+const coverFullUrl = ref('');
+const videoFullUrl = ref('');
 const opusData = ref({
   id: '',
   nameCn: '',
@@ -90,20 +95,49 @@ const opusData = ref({
   aniTags: [],
   aniSummary: '',
 });
+const readingNum = ref('');
 
 onMounted(() => {
+  ipc.invoke(ipcApiRoute.getCache, 'janime_api_url').then(baseUrl => {
+    coverFullUrl.value = baseUrl + '/api/anime/opus/cover?resName=';
+    baseApiUrl.value = baseUrl;
+  });
 });
 
 const loadMediaData = (opusId) => {
   aniOpusApi.getOpusMedia(opusId).then(resp => {
     let res = resp.data;
-    if (res.code === ResultCode.SUCCESS) {
-      if (res.data.readingNum) {
-        res.data.readingNum = formatUtil.fillZero(res.data.readingNum);
-      }
-      opusData.value = res.data;
+    if (res.code !== ResultCode.SUCCESS) {
+      return res;
     }
+    if (!res.data.readingNum) {
+      return res;
+    }
+
+    autoPlay(opusId, res.data);
+
+    readingNum.value = formatUtil.fillZero(res.data.readingNum);
+    opusData.value = res.data;
   });
+}
+
+const autoPlay = (opusId, data) => {
+  if (data.readingNum <= 0) {
+    let media = data.mediaList[0];
+    videoFullUrl.value = getMediaUrl(opusId, media.episodes, media.mediaType);
+  } else {
+    let media = data.mediaList[data.readingNum];
+    videoFullUrl.value = getMediaUrl(opusId, media.episodes, media.mediaType);
+  }
+}
+
+const getMediaUrl = (id, episodes, mediaType) => {
+  return `${baseApiUrl.value}/api/anime/opus/media/${id}?resName=${episodes}.${mediaType}`;
+}
+
+const onEpisodesChange = (val) => {
+  let mediaType = opusData.value.mediaList[0].mediaType;
+  videoFullUrl.value = getMediaUrl(route.query.opusId, val, mediaType);
 }
 
 const onOpusIdChange = (opusId) => {
