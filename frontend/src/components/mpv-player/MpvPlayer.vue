@@ -1,8 +1,6 @@
 <template>
-  <media-controller>
-    <div class="mpv-box">
-      <embed id="mpvjs" type="application/x-mpvjs"/>
-    </div>
+  <media-controller class="mpv-player">
+    <embed id="mpvjs" type="application/x-mpvjs"/>
 
     <media-control-bar>
       <media-play-button @click="onPlay"></media-play-button>
@@ -37,13 +35,8 @@ const onPlay = () => {
 </script>
 
 <style scoped>
-.mpv-box {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-#mpvjs, .mpv-box {
+.mpv-player, #mpvjs {
   width: 100%;
+  height: 100%;
 }
 </style>

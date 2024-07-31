@@ -116,14 +116,10 @@ watch(() => route.query.opusId, onOpusIdChange, {immediate: true});
 <style scoped>
 .video-container {
   height: 100%;
+  padding: 5px;
 }
 
 .mpvjs-layout {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   background-color: black;
 }
 
