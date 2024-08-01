@@ -1,7 +1,7 @@
 <template>
   <el-row class="video-container">
 
-    <el-col :span="16" class="mpvjs-layout">
+    <el-col :span="16">
       <mpv-player :video-url="videoFullUrl"/>
     </el-col>
 
@@ -151,10 +151,6 @@ watch(() => route.query.opusId, onOpusIdChange, {immediate: true});
 .video-container {
   height: 100%;
   padding: 5px;
-}
-
-.mpvjs-layout {
-  background-color: black;
 }
 
 .video-right {
