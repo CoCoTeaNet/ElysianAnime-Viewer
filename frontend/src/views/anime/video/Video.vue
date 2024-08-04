@@ -18,7 +18,15 @@
               </el-space>
             </el-col>
             <el-col :span="8">
-              <el-button>
+              <el-button :type="opusData.userOpusId ? 'primary' : ''"
+                         :disabled="!!opusData.userOpusId"
+                         @click="onFollow">
+                <template #icon>
+                  <el-icon>
+                    <star-filled v-if="opusData.userOpusId"/>
+                    <star v-else/>
+                  </el-icon>
+                </template>
                 {{ opusData.userOpusId ? '已追番' : '未追番' }}
               </el-button>
             </el-col>
@@ -69,6 +77,8 @@ import formatUtil from "@/utils/formatUtil";
 import MpvPlayer from "@/components/mpv-player/MpvPlayer.vue";
 import {ipc} from "@/utils/ipcRenderer";
 import {ipcApiRoute} from "@/api/main";
+import {Star, StarFilled} from "@element-plus/icons-vue";
+import aniUserOpusApi from "@/api/http/ani-user-opus";
 
 const route = useRoute();
 
@@ -138,6 +148,16 @@ const getMediaUrl = (id, episodes, mediaType) => {
 const onEpisodesChange = (val) => {
   let mediaType = opusData.value.mediaList[0].mediaType;
   videoFullUrl.value = getMediaUrl(route.query.opusId, val, mediaType);
+}
+
+const onFollow = () => {
+  let opusId = route.query.opusId;
+  aniUserOpusApi.follow(opusId).then(resp => {
+    let res = resp.data;
+    if (res.code === ResultCode.SUCCESS) {
+      loadMediaData(opusId);
+    }
+  });
 }
 
 const onOpusIdChange = (opusId) => {

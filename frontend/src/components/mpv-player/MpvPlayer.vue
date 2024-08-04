@@ -1,9 +1,14 @@
 <template>
-  <div ref="playerRef" class="mpv-player-layout" @keyup.space="onpause">
-    <embed ref="mpvRef" id="mpvjs" type="application/x-mpvjs"/>
+  <div ref="playerRef"
+       :class="`mpv-player-layout ${mps.showControl ? '' : 'hide-cursor'}`"
+       @keyup.space="onpause"
+       @mouseleave="() => mps.showControl = false"
+       @mousemove="onMouseMove"
+       @mouseenter="onMouseEnter">
 
-    <div class="mpv-player-control">
+    <embed ref="mpvRef" id="mpvjs" type="application/x-mpvjs" wmode="transparent"/>
 
+    <div v-show="mps.showControl" class="mpv-player-control">
       <div class="mpc-left">
         <div class="mp-play" @click="onpause">
           <icon-play v-if="mps.paused"/>
@@ -33,6 +38,7 @@
         <icon-screen-close v-else/>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -49,6 +55,7 @@ import IconScreenClose from "@/components/icon/IconScreenClose.vue";
 
 const props = defineProps(['videoUrl']);
 
+let timer;
 let mpv;
 const mpvRef = ref(null);
 const playerRef = ref(null);
@@ -60,6 +67,7 @@ const mps = reactive({
   timePos: 0,
   duration: 0,
   fullscreen: false,
+  showControl: true,
 });
 
 onMounted(() => {
@@ -68,6 +76,28 @@ onMounted(() => {
 onUnmounted(() => {
   mpvRef.value.removeEventListener("message", onMessage, false);
 })
+
+
+const onMouseMove = () => {
+  if (!mps.showControl) {
+    mps.showControl = true;
+  } else {
+    mouseEnterTimeout();
+  }
+}
+
+const onMouseEnter = () => {
+  mouseEnterTimeout();
+}
+
+const mouseEnterTimeout = () => {
+  if (timer != null) {
+    clearTimeout(timer);
+  }
+  timer = setTimeout(() => {
+    mps.showControl = false;
+  }, 2500);
+}
 
 const playFile = (src) => {
   console.log('source=' + src)
@@ -169,7 +199,10 @@ watch(() => props.videoUrl, onVideoSrcChange);
 .mpv-player-control {
   width: 100%;
   height: 44px;
-  background-color: rgba(255, 255, 255, 0.53);
+  position: inherit;
+  box-sizing: border-box;
+  bottom: 0;
+  background-color: rgba(250, 252, 255, 0.22);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -189,5 +222,12 @@ watch(() => props.videoUrl, onVideoSrcChange);
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+/**
+ * 隐藏指针
+ */
+.hide-cursor {
+  cursor: none;
 }
 </style>
