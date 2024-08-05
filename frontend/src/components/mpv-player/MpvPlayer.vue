@@ -188,6 +188,7 @@ watch(() => props.videoUrl, onVideoSrcChange);
   flex-direction: column;
   justify-content: stretch;
   background-color: black;
+  position: relative;
   z-index: 9999;
 }
 
@@ -199,7 +200,7 @@ watch(() => props.videoUrl, onVideoSrcChange);
 .mpv-player-control {
   width: 100%;
   height: 44px;
-  position: inherit;
+  position: absolute;
   box-sizing: border-box;
   bottom: 0;
   background-color: rgba(250, 252, 255, 0.22);
