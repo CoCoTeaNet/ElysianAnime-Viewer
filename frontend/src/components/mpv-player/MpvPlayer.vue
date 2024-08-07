@@ -19,13 +19,13 @@
             <icon-muted v-if="mps.muted"/>
             <icon-volume v-else/>
           </div>
-          <div style="width: 100px;padding: 0 1em;">
+          <div style="width: 100px;padding: 0 0 0 0.5em;">
             <el-slider size="small" v-model="mps.volume" :max="200" @change="onvolumechange" />
           </div>
         </div>
       </div>
 
-      <div style="width: 100%;padding: 0 1em 0 1em">
+      <div style="width: 100%;padding: 0 1em">
         <el-slider size="small" v-model="mps.timePos" :max="mps.duration" @change="onChange" @input="onInput"/>
       </div>
 
@@ -70,6 +70,27 @@ const mps = reactive({
   showControl: true,
 });
 
+const firstTimePos = ref(0);
+
+const getTime = () => {
+  return mps.timePos;
+}
+
+const getPaused = () => {
+  return mps.paused;
+}
+
+const setTimePos = (time) => {
+  firstTimePos.value = time;
+}
+
+// 向外暴露方法
+defineExpose({
+  getTime: getTime,
+  getPaused: getPaused,
+  setTimePos: setTimePos,
+});
+
 onMounted(() => {
 });
 
@@ -100,7 +121,6 @@ const mouseEnterTimeout = () => {
 }
 
 const playFile = (src) => {
-  console.log('source=' + src)
   mpv.loadFile(src);
   mpv.goPlay(true);
   mps.paused = false;
@@ -124,14 +144,11 @@ const onvolumechange = (val) => {
 }
 
 const onChange = (val) => {
-  mpv.goPlay(true);
   mps.paused = false;
 }
 
 const onInput = (val) => {
-  console.log(val);
-  mpv.goPlay(false);
-  mpv.setTimePos(val);
+  updateTimePos(val);
 }
 
 const onMuted = () => {
@@ -153,11 +170,25 @@ const onFullscreen = () => {
   }
 }
 
+const autoTime = () => {
+  if (firstTimePos.value > 0) {
+    updateTimePos(firstTimePos.value);
+    firstTimePos.value = 0;
+  }
+}
+
+const updateTimePos = (timePos) => {
+  mpv.goPlay(false);
+  mpv.setTimePos(timePos);
+  mpv.goPlay(true);
+}
+
 const onMessage = (e) => {
   const msg = e.data;
   const {type, data} = msg;
   switch (data.name) {
     case 'time-pos':
+      autoTime();
       mps.timePos = Math.round(data.value);
       break;
     case 'duration':
@@ -203,7 +234,7 @@ watch(() => props.videoUrl, onVideoSrcChange);
   position: absolute;
   box-sizing: border-box;
   bottom: 0;
-  background-color: rgba(250, 252, 255, 0.22);
+  background-color: rgba(250, 252, 255, 0);
   display: flex;
   justify-content: space-between;
   align-items: center;

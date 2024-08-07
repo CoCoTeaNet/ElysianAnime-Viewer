@@ -2,7 +2,7 @@
   <el-row class="video-container">
 
     <el-col :span="16">
-      <mpv-player :video-url="videoFullUrl"/>
+      <mpv-player ref="mpvRef" :video-url="videoFullUrl"/>
     </el-col>
 
     <el-col :span="8" class="video-right">
@@ -82,6 +82,7 @@ import aniUserOpusApi from "@/api/http/ani-user-opus";
 
 const route = useRoute();
 
+const mpvRef = ref(null);
 const baseApiUrl = ref('');
 const coverFullUrl = ref('');
 const videoFullUrl = ref('');
@@ -112,6 +113,16 @@ onMounted(() => {
     coverFullUrl.value = baseUrl + '/api/anime/opus/cover?resName=';
     baseApiUrl.value = baseUrl;
   });
+
+  setInterval(() => {
+    if (!mpvRef.value.getPaused()) {
+      let param = {
+        readingTime: mpvRef.value.getTime(),
+        id: opusData.value.userOpusId,
+      };
+      aniUserOpusApi.updateProgress(param);
+    }
+  }, 2500);
 });
 
 const loadMediaData = (opusId) => {
@@ -138,6 +149,11 @@ const autoPlay = (opusId, data) => {
   } else {
     let media = data.mediaList[data.readingNum];
     videoFullUrl.value = getMediaUrl(opusId, media.episodes, media.mediaType);
+  }
+
+  if (data.readingTime) {
+    mpvRef.value.setTimePos(data.readingTime);
+    console.log('auto time pos', data.readingTime);
   }
 }
 
