@@ -55,6 +55,29 @@
         </el-card>
 
         <el-card style="text-align: left;font-size: 14px" shadow="hover">
+          <p>
+            观看状态：
+            <el-switch
+                inline-prompt
+                inactive-text="Reading~"
+                active-text="~Complete"
+                :active-value="1"
+                :inactive-value="0"
+                v-model="opusData.readStatus"
+                @change="onReadStatusChange"
+            />
+          </p>
+          <p>推荐番剧:
+            <el-switch
+                inline-prompt
+                inactive-text="(ˇˍˇ) 想～"
+                active-text="o(￣▽￣)ｄ"
+                :active-value="1"
+                :inactive-value="0"
+                v-model="opusData.isShare"
+                @change="onShareChange"
+            />
+          </p>
           <p>RSS链接: {{opusData.rssUrl}}</p>
           <p>番组计划: https://bgm.tv{{opusData.detailInfoUrl}}</p>
           <p>放送日期: {{opusData.launchStart}}</p>
@@ -79,6 +102,7 @@ import {ipc} from "@/utils/ipcRenderer";
 import {ipcApiRoute} from "@/api/main";
 import {Star, StarFilled} from "@element-plus/icons-vue";
 import aniUserOpusApi from "@/api/http/ani-user-opus";
+import {ElNotification} from "element-plus";
 
 const route = useRoute();
 
@@ -176,6 +200,28 @@ const onFollow = () => {
       loadMediaData(opusId);
     }
   });
+}
+
+const onShareChange = (val) => {
+  if (opusData.value.userOpusId <= 0) {
+    ElNotification({
+      message: '在推荐番剧前先追番吧~~~',
+      type: 'warning',
+    });
+    opusData.value.isShare = 0;
+    return;
+  }
+  aniUserOpusApi.share(route.query.opusId);
+}
+
+const onReadStatusChange = (val) => {
+  if (val === 1) {
+    let param = {
+      readStatus: val,
+      id: opusData.value.userOpusId,
+    };
+    aniUserOpusApi.updateProgress(param);
+  }
 }
 
 const onOpusIdChange = (opusId) => {
