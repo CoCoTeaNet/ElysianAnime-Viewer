@@ -115,7 +115,7 @@ onMounted(() => {
   });
 
   setInterval(() => {
-    if (!mpvRef.value.getPaused()) {
+    if (!mpvRef.value.getPaused() && opusData.value.userOpusId > 0) {
       let param = {
         readingTime: mpvRef.value.getTime(),
         id: opusData.value.userOpusId,
@@ -143,18 +143,20 @@ const loadMediaData = (opusId) => {
 }
 
 const autoPlay = (opusId, data) => {
+  let media;
   if (data.readingNum <= 0) {
-    let media = data.mediaList[0];
-    videoFullUrl.value = getMediaUrl(opusId, media.episodes, media.mediaType);
+    media = data.mediaList[0];
   } else {
-    let media = data.mediaList[data.readingNum];
-    videoFullUrl.value = getMediaUrl(opusId, media.episodes, media.mediaType);
+    media = data.mediaList[data.readingNum - 1];
   }
+  videoFullUrl.value = getMediaUrl(opusId, media.episodes, media.mediaType);
 
   if (data.readingTime) {
     mpvRef.value.setTimePos(data.readingTime);
     console.log('auto time pos', data.readingTime);
   }
+
+  console.log('src=' + videoFullUrl.value)
 }
 
 const getMediaUrl = (id, episodes, mediaType) => {
