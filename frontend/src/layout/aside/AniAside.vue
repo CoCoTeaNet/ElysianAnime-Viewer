@@ -12,29 +12,23 @@
 
     <el-menu-item index="2">
       <el-icon>
-        <star-filled/>
+        <share/>
       </el-icon>
     </el-menu-item>
 
     <el-menu-item index="3">
       <el-icon>
-        <share/>
-      </el-icon>
-    </el-menu-item>
-
-    <el-menu-item index="4">
-      <el-icon>
         <message/>
       </el-icon>
     </el-menu-item>
 
-    <el-menu-item index="5" @click="go('AnimeUser')">
+    <el-menu-item index="4" @click="go('AnimeUser')">
       <el-icon>
         <user/>
       </el-icon>
     </el-menu-item>
 
-    <el-menu-item index="6">
+    <el-menu-item index="5">
       <el-icon>
         <setting/>
       </el-icon>
