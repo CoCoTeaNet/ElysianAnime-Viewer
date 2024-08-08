@@ -7,12 +7,10 @@
     <el-container>
       <el-header class="main-layout-header">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item :to="{ path: '/' }">homepage</el-breadcrumb-item>
+          <el-breadcrumb-item>HOME</el-breadcrumb-item>
           <el-breadcrumb-item>
-            <a href="/">promotion management</a>
+            {{route.name}}
           </el-breadcrumb-item>
-          <el-breadcrumb-item>promotion list</el-breadcrumb-item>
-          <el-breadcrumb-item>promotion detail</el-breadcrumb-item>
         </el-breadcrumb>
         <ani-header/>
       </el-header>
@@ -36,6 +34,9 @@ import AniAside from "@/layout/aside/AniAside.vue";
 import {onMounted} from "vue";
 import {ipc} from "@/utils/ipcRenderer";
 import {ipcApiRoute} from "@/api/main";
+import {useRoute} from "vue-router";
+
+const route = useRoute();
 
 onMounted(() => {
   ipc.invoke(ipcApiRoute.test).then(id => {

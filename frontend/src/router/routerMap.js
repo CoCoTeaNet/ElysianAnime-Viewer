@@ -6,24 +6,24 @@ const constantRouterMap = [
   {
     path: '/',
     name: 'Anime',
-    redirect: { name: 'AnimeHomeIndex' },
+    redirect: { name: 'AnimeHome' },
     component: () => import('@/layout/MainLayout.vue'),
     children: [
       {
         path: '/home',
-        name: 'AnimeHomeIndex',
+        name: 'AnimeHome',
         component: () => import('@/views/anime/home/Home.vue')
       },
       {
         path: '/user',
-        name: 'AnimeUserIndex',
+        name: 'AnimeUser',
         component: () => import('@/views/anime/user/User.vue')
       },
     ]
   },
   {
     path: '/video',
-    name: 'AnimeVideoIndex',
+    name: 'AnimeVideo',
     component: () => import('@/views/anime/video/Video.vue')
   },
   {

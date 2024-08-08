@@ -125,7 +125,7 @@ const doLogin = async (formEl) => {
           Toast.success('登录成功');
           store.saveToken(data.data);
           setTimeout(() => {
-            router.push({name: 'AnimeHomeIndex'});
+            router.push({name: 'AnimeHome'});
           }, 1000);
         } else {
           Toast.error(data.message);

@@ -7,7 +7,7 @@
     >
       <div class="ani-card-cover-text">
         <div></div>
-        <el-text style="margin-right: 3px">
+        <el-text class="ani-card-cover-el-text">
           {{cardView.currentEpisodes}} / {{cardView.episodes}}
         </el-text>
       </div>
@@ -74,6 +74,14 @@ const cardView = reactive({
 .ani-card-cover-text {
   display: flex;
   justify-content: space-between;
+}
+
+.ani-card-cover-el-text {
+  margin-right: 3px;
+  background-color: rgba(20, 20, 20, 0.49);
+  padding: 1px 3px;
+  border-radius: 18px;
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .ani-card-title {

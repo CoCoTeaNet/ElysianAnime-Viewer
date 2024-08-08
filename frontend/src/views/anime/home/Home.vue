@@ -14,8 +14,12 @@ import {ipcApiRoute} from "@/api/main";
 import {ipc} from "@/utils/ipcRenderer";
 import AniCard from "@/components/card/AniCard.vue";
 import aniOpusApi from "@/api/http/ani-opus-api";
-import {onMounted, reactive, ref} from "vue";
+import {onMounted, reactive, ref, watch} from "vue";
 import {ResultCode} from "@/utils/requestUtil";
+import {useRoute} from "vue-router";
+import {nextTick} from "vue";
+
+const route = useRoute();
 
 const coverApiBase = ref('');
 const queryModel = reactive({
@@ -44,7 +48,7 @@ const toOpusDetail = (opusId) => {
   let args = {
     type: 'vue',
     content: '/video',
-    windowName: 'AnimeVideoIndex',
+    windowName: 'AnimeVideo',
     windowTitle: 'mpv-player',
     opusId: opusId
   };
@@ -67,6 +71,37 @@ const loadOpus = () => {
     }
   });
 }
+
+
+const onSearchKeyChange = (newVals, oldVals) => {
+  let key = newVals[0];
+  let status = newVals[1];
+
+  if (key) {
+    queryModel.searchKey = newVals[0];
+  }
+  if (status) {
+    queryModel.status = [newVals[1]];
+  }
+
+  if ('-1' === key) {
+    queryModel.searchKey = '';
+  }
+
+  if ('-1' === status) {
+    queryModel.status = [];
+  }
+
+  if (key || status) {
+    nextTick(() => loadOpus());
+  }
+}
+
+watch(
+    () => [route.query.searchKey, route.query.readStatus],
+    onSearchKeyChange,
+    {immediate: true},
+);
 </script>
 
 <style scoped>

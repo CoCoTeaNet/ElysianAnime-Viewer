@@ -4,7 +4,7 @@
       <img src="@/assets/logo.png" style="width: 36px" alt="logo">
     </div>
 
-    <el-menu-item index="1" @click="go('AnimeHomeIndex')">
+    <el-menu-item index="1" @click="go('AnimeHome')">
       <el-icon>
         <home-filled/>
       </el-icon>
@@ -28,7 +28,7 @@
       </el-icon>
     </el-menu-item>
 
-    <el-menu-item index="5" @click="go('AnimeUserIndex')">
+    <el-menu-item index="5" @click="go('AnimeUser')">
       <el-icon>
         <user/>
       </el-icon>
