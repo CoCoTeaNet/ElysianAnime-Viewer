@@ -1,9 +1,10 @@
 const { Application } = require('ee-core');
 const path = require("path");
 const {app} = require("electron");
-const {getPluginEntry} = require("mpv.js");
+const Log = require('ee-core/log');
 
 class Index extends Application {
+
 
   constructor() {
     super();
@@ -14,13 +15,17 @@ class Index extends Application {
    * core app have been loaded
    */
   async ready () {
-    // do some things
     // 加载mpv lib
-    const pdir = path.join(path.dirname(require.resolve("mpv.js")), "build", "Release");
-    if (process.platform !== "linux") {process.chdir(pdir);}
+    global.__static = path.join(__dirname, '../static').replace(/\\/g, '\\\\')
+    let pluginPath = path.join(__static, 'mpv.js/mpvjs.node;application/x-mpvjs').split('\\').join('/');
+
+    // const pdir = path.join('', "static", "mpv.js");
+    // if (process.platform !== "linux") {process.chdir(pdir);}
+    Log.info("mpv.js plugin loading, dir=" + pluginPath);
+
     app.commandLine.appendSwitch("no-sandbox");
     app.commandLine.appendSwitch("ignore-gpu-blacklist");
-    app.commandLine.appendSwitch("register-pepper-plugins", getPluginEntry(pdir));
+    app.commandLine.appendSwitch("register-pepper-plugins", pluginPath);
   }
 
   /**
@@ -51,7 +56,6 @@ class Index extends Application {
    */
   async beforeClose () {
     // do some things
-
   }
 }
 
