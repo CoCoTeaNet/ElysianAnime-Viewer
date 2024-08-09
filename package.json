@@ -1,7 +1,7 @@
 {
-  "name": "ee",
-  "version": "3.11.0",
-  "description": "A fast, desktop software development framework",
+  "name": "janime",
+  "version": "1.0.0",
+  "description": "desktop client for janime.",
   "main": "main.js",
   "scripts": {
     "dev": "ee-bin dev",
@@ -42,7 +42,7 @@
     "electron-egg",
     "ElectronEgg"
   ],
-  "author": "哆啦好梦, Inc <530353222@qq.com>",
+  "author": "CoCotea, Inc <572315466@qq.com>",
   "license": "Apache",
   "devDependencies": {
     "@electron/rebuild": "^3.2.13",
