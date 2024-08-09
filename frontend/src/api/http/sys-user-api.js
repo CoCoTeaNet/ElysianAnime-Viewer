@@ -1,5 +1,9 @@
 import {apiGet, apiPost} from '@/utils/requestUtil';
 
+const sysUserApi = {
+    getDetail: getDetail
+}
+
 /**
  * 用户获取个人详细信息
  */
@@ -24,3 +28,5 @@ export function updateByUser(data) {
 export function doModifyPassword(data) {
     return apiPost('system/user/doModifyPassword', data);
 }
+
+export default sysUserApi;
