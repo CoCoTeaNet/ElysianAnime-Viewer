@@ -2,6 +2,7 @@ const { Application } = require('ee-core');
 const path = require("path");
 const {app} = require("electron");
 const Log = require('ee-core/log');
+const Ps = require("ee-core/ps");
 
 class Index extends Application {
 
@@ -16,11 +17,13 @@ class Index extends Application {
    */
   async ready () {
     // 加载mpv lib
-    global.__static = path.join(__dirname, '../static').replace(/\\/g, '\\\\')
-    let pluginPath = path.join(__static, 'mpv.js/mpvjs.node;application/x-mpvjs').split('\\').join('/');
+    let mpvPluginDir = path.join(Ps.getExtraResourcesDir(), 'dll').replace(/\\/g, '\\\\');
+    let pluginPath = path.join(mpvPluginDir, 'mpvjs/mpvjs.node;application/x-mpvjs').split('\\').join('/');
 
-    // const pdir = path.join('', "static", "mpv.js");
-    // if (process.platform !== "linux") {process.chdir(pdir);}
+    if (Ps.isProd()) {
+      pluginPath = pluginPath.replace('app.asar', 'app.asar.unpacked')
+    }
+
     Log.info("mpv.js plugin loading, dir=" + pluginPath);
 
     app.commandLine.appendSwitch("no-sandbox");

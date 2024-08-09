@@ -4,7 +4,6 @@ const {Service} = require('ee-core');
 const Addon = require("ee-core/addon");
 const Log = require('ee-core/log');
 const {isProd, getHomeDir, isDev} = require("ee-core/ps");
-const {getValue, isFileProtocol} = require("ee-core/config");
 const {join} = require("path");
 const path = require("path");
 const Config = require("ee-core/config");
@@ -32,20 +31,23 @@ class WindowService extends Service {
         const {type, content, windowName, windowTitle, opusId} = args;
         let contentUrl = null;
         if (type === 'html') {
-            contentUrl = path.join('file://', electronApp.getAppPath(), content)
+            contentUrl = path.join('file://', electronApp.getAppPath(), '#' + content);
+            Log.info('html type >>>>> ', contentUrl);
         } else if (type === 'web') {
             contentUrl = content;
+            Log.info('web type >>>>> ', contentUrl);
         } else if (type === 'vue') {
             let addr = 'http://localhost:8080/#'
             if (isProd()) {
-                const mainServer = getValue('mainServer');
-                if (isFileProtocol(mainServer)) {
+                const mainServer = Config.getValue('mainServer');
+                if (Config.isFileProtocol(mainServer)) {
                     addr = mainServer.protocol + join(getHomeDir(), mainServer.indexPath);
                 } else {
                     addr = mainServer.protocol + mainServer.host + ':' + mainServer.port;
                 }
             }
-            contentUrl = addr + content;
+            contentUrl = addr + '#' + content;
+            Log.info('vue type >>>>> ', contentUrl);
         } else {
             Log.warn('unknown type');
         }
