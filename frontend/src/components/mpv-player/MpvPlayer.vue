@@ -52,9 +52,11 @@ import IconVolume from "@/components/icon/IconVolume.vue";
 import IconSetting from "@/components/icon/IconSetting.vue";
 import IconMuted from "@/components/icon/IconMuted.vue";
 import IconScreenClose from "@/components/icon/IconScreenClose.vue";
+import NoSleep from "nosleep.js"
 
 const props = defineProps(['videoUrl']);
 
+let noSleep = new NoSleep();
 let timer;
 let mpv;
 const mpvRef = ref(null);
@@ -131,9 +133,11 @@ const onpause = () => {
   if (mps.paused === true) {
     // 暂停了，那就播放
     mpv.goPlay(true);
+    noSleep.enable();
   } else {
     // 暂停
     mpv.goPlay(false);
+    noSleep.disable();
   }
   mps.paused = !mps.paused;
 }

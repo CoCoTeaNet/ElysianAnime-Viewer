@@ -96,7 +96,7 @@ const loadCaptcha = () => {
 const rules = reactive({
   username: [
     {required: true, message: 'Please input Activity username', trigger: 'blur'},
-    {min: 6, max: 40, message: 'Length should be 4 to 40', trigger: 'blur'},
+    {min: 4, max: 40, message: 'Length should be 4 to 40', trigger: 'blur'},
   ],
   password: [
     {required: true, message: 'Please input Activity password', trigger: 'blur'},

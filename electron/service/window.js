@@ -46,13 +46,13 @@ class WindowService extends Service {
                     addr = mainServer.protocol + mainServer.host + ':' + mainServer.port;
                 }
             }
-            contentUrl = addr + '#' + content;
+            contentUrl = addr + content;
             Log.info('vue type >>>>> ', contentUrl);
         } else {
             Log.warn('unknown type');
         }
 
-        contentUrl = contentUrl + "?opusId=" + opusId
+        contentUrl = contentUrl + "?opusId=" + opusId;
 
         Log.info('contentUrl: ', contentUrl);
         let mainOpt = Config.getValue('windowsOption');
