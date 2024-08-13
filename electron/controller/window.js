@@ -27,8 +27,8 @@ class WindowController extends Controller {
     return result;
   }
 
-  async hideMpv (args) {
-    const result = await Services.get('window').hideMpv(args);
+  async closeMpv (args) {
+    const result = await Services.get('window').closeMpv(args);
     Log.info('hideMpv result:', result);
     return result;
   }

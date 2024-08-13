@@ -10,7 +10,7 @@ const ipcApiRoute = {
   getCache: 'controller.client.getCache',
   createWindow: 'controller.window.createWindow',
   createMpv: 'controller.window.createMpv',
-  hideMpv: 'controller.window.hideMpv',
+  closeMpv: 'controller.window.closeMpv',
 }
 
 export {

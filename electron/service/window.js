@@ -93,7 +93,7 @@ class WindowService extends Service {
         return win.webContents.id;
     }
 
-    hideMpv(args) {
+    closeMpv(args) {
         let windowName = args.windowName;
         if (!windowName) {
             return false;
@@ -101,7 +101,7 @@ class WindowService extends Service {
         let windowAddon = Addon.get('window');
         let winCid = windowAddon.getWCid(windowName);
         let win = this.windowMap.get(winCid);
-        win.hide();
+        win.close();
         return true;
     }
 

@@ -38,7 +38,7 @@ export const useUserStore = defineStore('user', {
         },
         logout() {
             sysLoginApi.logout().finally(() => {
-                ipc.invoke(ipcApiRoute.hideMpv, {windowName: 'AnimeVideo'}).then(resp => console.log('[hideMpv] result: ', resp));
+                ipc.invoke(ipcApiRoute.closeMpv, {windowName: 'AnimeVideo'}).then(resp => console.log('[hideMpv] result: ', resp));
                 router.push({name: 'LoginIndex'}).then(r => console.log(r));
             });
         }
