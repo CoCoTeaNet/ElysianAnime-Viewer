@@ -1,5 +1,5 @@
 <template>
-  <el-row class="video-container">
+  <el-row class="video-container" v-loading="videoLoading">
 
     <el-col :span="16">
       <mpv-player ref="mpvRef" :video-url="videoFullUrl"/>
@@ -106,6 +106,7 @@ import {ElNotification} from "element-plus";
 
 const route = useRoute();
 
+const videoLoading = ref(false);
 const mpvRef = ref(null);
 const baseApiUrl = ref('');
 const coverFullUrl = ref('');
@@ -142,6 +143,7 @@ onMounted(() => {
     if (!mpvRef.value.getPaused() && opusData.value.userOpusId > 0) {
       let param = {
         readingTime: mpvRef.value.getTime(),
+        readingNum: readingNum.value ? readingNum.value : 1,
         id: opusData.value.userOpusId,
       };
       aniUserOpusApi.updateProgress(param);
@@ -150,6 +152,7 @@ onMounted(() => {
 });
 
 const loadMediaData = (opusId) => {
+  videoLoading.value = true;
   aniOpusApi.getOpusMedia(opusId).then(resp => {
     let res = resp.data;
     if (res.code !== ResultCode.SUCCESS) {
@@ -163,6 +166,8 @@ const loadMediaData = (opusId) => {
 
     readingNum.value = formatUtil.fillZero(res.data.readingNum);
     opusData.value = res.data;
+  }).finally(() => {
+    setTimeout(() => videoLoading.value = false, 800);
   });
 }
 

@@ -1,5 +1,6 @@
 <template>
   <div ref="playerRef"
+       v-loading="mpvLoading"
        :class="`mpv-player-layout ${mps.showControl ? '' : 'hide-cursor'}`"
        @keyup.space="onpause"
        @mouseleave="() => mps.showControl = false"
@@ -61,6 +62,7 @@ let timer;
 let mpv;
 const mpvRef = ref(null);
 const playerRef = ref(null);
+const mpvLoading = ref(false);
 
 const mps = reactive({
   volume: 100,
@@ -123,9 +125,13 @@ const mouseEnterTimeout = () => {
 }
 
 const playFile = (src) => {
+  mpvLoading.value = true;
+
   mpv.loadFile(src);
   mpv.goPlay(true);
   mps.paused = false;
+
+  setTimeout(() => {mpvLoading.value = false;}, 800);
 }
 
 const onpause = () => {
