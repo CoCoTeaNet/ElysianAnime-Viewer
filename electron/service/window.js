@@ -42,6 +42,7 @@ class WindowService extends Service {
                 const mainServer = Config.getValue('mainServer');
                 if (Config.isFileProtocol(mainServer)) {
                     addr = mainServer.protocol + join(getHomeDir(), mainServer.indexPath);
+                    addr += '#';
                 } else {
                     addr = mainServer.protocol + mainServer.host + ':' + mainServer.port;
                 }
@@ -76,6 +77,7 @@ class WindowService extends Service {
         let winCid = windowAddon.getWCid(windowName);
         if (winCid) {
             win = this.windowMap.get(winCid);
+            win.setTitle(windowTitle);
         } else {
             win = windowAddon.create(windowName, opt);
             this.windowMap.set(win.webContents.id, win);
@@ -89,6 +91,18 @@ class WindowService extends Service {
             win.openDevTools();
         }
         return win.webContents.id;
+    }
+
+    hideMpv(args) {
+        let windowName = args.windowName;
+        if (!windowName) {
+            return false;
+        }
+        let windowAddon = Addon.get('window');
+        let winCid = windowAddon.getWCid(windowName);
+        let win = this.windowMap.get(winCid);
+        win.hide();
+        return true;
     }
 
 }

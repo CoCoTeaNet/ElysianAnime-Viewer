@@ -1,6 +1,8 @@
 import {defineStore} from 'pinia'
 import {ipc} from "@/utils/ipcRenderer";
 import {ipcApiRoute} from "@/api/main";
+import sysLoginApi from "@/api/http/sys-login-api";
+import router from "@/router";
 
 /**
  * 定义一个用户信息store
@@ -33,6 +35,12 @@ export const useUserStore = defineStore('user', {
         },
         saveUserinfo(userinfo) {
             this.userinfo = userinfo;
+        },
+        logout() {
+            sysLoginApi.logout().finally(() => {
+                ipc.invoke(ipcApiRoute.hideMpv, {windowName: 'AnimeVideo'}).then(resp => console.log('[hideMpv] result: ', resp));
+                router.push({name: 'LoginIndex'}).then(r => console.log(r));
+            });
         }
     }
 })

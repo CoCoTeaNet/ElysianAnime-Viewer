@@ -84,11 +84,11 @@
 
 <script setup>
 import {ref, onMounted} from "vue";
-import router from "@/router"
-import sysLoginApi from "@/api/http/sys-login-api";
 import sysUserApi from "@/api/http/sys-user-api";
 import {ResultCode} from "@/utils/requestUtil";
 import {Iphone, Location, Message, User} from "@element-plus/icons-vue";
+import {useUserStore} from "@/stores/user";
+const store = useUserStore();
 
 const userinfo = ref({
   username: '',
@@ -116,9 +116,7 @@ const loadUserInfo = () => {
 }
 
 const onLogout = () => {
-  sysLoginApi.logout().finally(() => {
-    router.push({name: 'LoginIndex'});
-  });
+  store.logout();
 }
 </script>
 

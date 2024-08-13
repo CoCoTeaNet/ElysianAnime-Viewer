@@ -18,8 +18,10 @@ import {reactive} from "vue";
 import {ipc} from "@/utils/ipcRenderer";
 import {ipcApiRoute} from "@/api/main";
 import {ElNotification} from "element-plus";
-import sysLoginApi from "@/api/http/sys-login-api";
 import router from "@/router";
+import {useUserStore} from "@/stores/user";
+
+const store = useUserStore();
 
 const clientConf = reactive({
   server: '',
@@ -32,7 +34,7 @@ const onUpdate = () => {
       value: clientConf.server
     };
     // 告诉服务器退出登录
-    sysLoginApi.logout();
+    store.logout();
     // 更新配置项
     ipc.invoke(ipcApiRoute.cache, JSON.stringify(args)).then((resp) => {
       ElNotification({

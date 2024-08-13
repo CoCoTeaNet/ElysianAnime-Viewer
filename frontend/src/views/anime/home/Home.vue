@@ -44,12 +44,13 @@ onMounted(() => {
   });
 });
 
-const toOpusDetail = (opusId) => {
+const toOpusDetail = (data) => {
+  let opusId = data.id;
   let args = {
     type: 'vue',
     content: '/video',
     windowName: 'AnimeVideo',
-    windowTitle: 'mpv-player',
+    windowTitle: `正在播放：${data.nameCn}`,
     opusId: opusId
   };
   ipc.invoke(ipcApiRoute.createMpv, args).then(id => {

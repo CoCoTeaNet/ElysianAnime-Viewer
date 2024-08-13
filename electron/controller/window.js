@@ -27,6 +27,12 @@ class WindowController extends Controller {
     return result;
   }
 
+  async hideMpv (args) {
+    const result = await Services.get('window').hideMpv(args);
+    Log.info('hideMpv result:', result);
+    return result;
+  }
+
 }
 
 WindowController.toString = () => '[class WindowController]';

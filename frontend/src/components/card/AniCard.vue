@@ -3,7 +3,7 @@
 
     <div class="ani-card-cover pointer-css"
          :style="`background-image: url(${cardView.cover})`"
-         @click="$emit('onTitleClick', cardData.id)"
+         @click="$emit('onTitleClick', cardData)"
     >
       <div class="ani-card-cover-text">
         <div></div>
@@ -18,14 +18,14 @@
         <el-text class="pointer-css"
                  type="primary"
                  truncated
-                 @click="$emit('onTitleClick', cardData.id)">
+                 @click="$emit('onTitleClick', cardData)">
           {{cardView.title}}
         </el-text>
         <el-icon style="transform: rotate(90deg);"><MoreFilled /></el-icon>
       </div>
       <el-text size="small"
                class="pointer-css"
-               @click="$emit('onTitleClick', cardData.id)">
+               @click="$emit('onTitleClick', cardData)">
         {{cardView.placeholder}}
       </el-text>
     </div>
