@@ -1,6 +1,16 @@
 # JAnime Desktop 更新日志
 
 
+## v1.0.0
+- 变更：程序LOGO替换为janime
+- 优化：MpvPlayer组件资源加载完成后停止loading
+- 修复：MpvPlayer组件偶尔space按键失灵问题
+- 修复：MpvPlayer组件没法隐藏指针问题
+- 修复：MpvPlayer组件没有默认开启NoSleep模式
+- 修复：番剧详细页面宽度溢出
+- 修复：番剧首页二次搜索展示数据不准确问题
+
+
 ## v1.0.0-beta.2
 - 优化：播放器数据加载增加loading状态
 - 修复：登录页面账号限制4位起，但是无法提交

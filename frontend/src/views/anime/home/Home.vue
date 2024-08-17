@@ -1,11 +1,12 @@
 <template>
   <div class="home-container">
-    <ani-card
-        v-for="opus in opusPage.records"
-        :card-data="opus"
-        :cover-base-url="coverApiBase"
-        @onTitleClick="toOpusDetail"
-    />
+      <ani-card
+          v-for="opus in opusPage.records"
+          :key="opus.id"
+          :card-data="opus"
+          :cover-base-url="coverApiBase"
+          @onTitleClick="toOpusDetail"
+      />
   </div>
 </template>
 
@@ -60,11 +61,7 @@ const toOpusDetail = (data) => {
 }
 
 const loadOpus = () => {
-  let queryParams = {};
-
-  Object.assign(queryParams, queryModel);
-
-  aniOpusApi.listByUser(queryParams).then(resp => {
+  aniOpusApi.listByUser(queryModel).then(resp => {
     let vo = resp.data;
     if (vo.code === ResultCode.SUCCESS) {
       opusPage.total = vo.data.total;

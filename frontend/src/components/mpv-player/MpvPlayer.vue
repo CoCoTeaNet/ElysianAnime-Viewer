@@ -1,42 +1,43 @@
 <template>
-  <div ref="playerRef"
-       v-loading="mpvLoading"
-       :class="`mpv-player-layout ${mps.showControl ? '' : 'hide-cursor'}`"
-       @keyup.space="onpause"
-       @mouseleave="() => mps.showControl = false"
-       @mousemove="onMouseMove"
-       @mouseenter="onMouseEnter">
+  <div ref="playerRef" v-loading="mpvLoading" class="mpv-player-layout">
 
     <embed ref="mpvRef" id="mpvjs" type="application/x-mpvjs" wmode="transparent"/>
 
-    <div v-show="mps.showControl" class="mpv-player-control">
-      <div class="mpc-left">
-        <div class="mp-play" @click="onpause">
-          <icon-play v-if="mps.paused"/>
-          <icon-paused v-else/>
-        </div>
-        <div class="micro-box">
-          <div class="mp-muted" @click="onMuted">
-            <icon-muted v-if="mps.muted"/>
-            <icon-volume v-else/>
+    <div :class="`mpv-player-control-container ${mps.showControl ? '' : 'hide-cursor'}`"
+         @mouseleave="() => mps.showControl = false"
+         @mousemove="onMouseMove"
+         @mouseenter="onMouseEnter">
+      <!-- 快捷按键控制面板 -->
+      <div style="height: 100%" @click="onpause"></div>
+      <!-- 控制面板 -->
+      <div v-show="mps.showControl" class="mpv-player-control">
+        <div class="mpc-left">
+          <div class="mp-play" @click="onpause">
+            <icon-play v-if="mps.paused"/>
+            <icon-paused v-else/>
           </div>
-          <div style="width: 100px;padding: 0 0 0 0.5em;">
-            <el-slider size="small" v-model="mps.volume" :max="200" @change="onvolumechange" />
+          <div class="micro-box">
+            <div class="mp-muted" @click="onMuted">
+              <icon-muted v-if="mps.muted"/>
+              <icon-volume v-else/>
+            </div>
+            <div style="width: 100px;padding: 0 0 0 0.5em;">
+              <el-slider size="small" v-model="mps.volume" :max="200" @change="onvolumechange" />
+            </div>
           </div>
         </div>
-      </div>
 
-      <div style="width: 100%;padding: 0 1em">
-        <el-slider size="small" v-model="mps.timePos" :max="mps.duration" @change="onChange" @input="onInput"/>
-      </div>
+        <div style="width: 100%;padding: 0 1em">
+          <el-slider size="small" v-model="mps.timePos" :max="mps.duration" @change="onChange" @input="onInput"/>
+        </div>
 
-<!--      <div>-->
-<!--        <icon-setting/>-->
-<!--      </div>-->
-
-      <div class="mp-screen" @click="onFullscreen">
-        <icon-screen v-if="!mps.fullscreen"/>
-        <icon-screen-close v-else/>
+        <!--      <div>-->
+        <!--        <icon-setting/>-->
+        <!--      </div>-->
+        <div class="mp-screen" @click="onFullscreen">
+          <icon-screen v-if="!mps.fullscreen"/>
+          <icon-screen-close v-else/>
+        </div>
       </div>
     </div>
 
@@ -96,6 +97,12 @@ defineExpose({
 });
 
 onMounted(() => {
+  // 绑定按键事件
+  window.addEventListener('keyup', function(event) {
+    if (event.code === 'Space') {
+      onpause();
+    }
+  });
 });
 
 onUnmounted(() => {
@@ -130,8 +137,7 @@ const playFile = (src) => {
   mpv.loadFile(src);
   mpv.goPlay(true);
   mps.paused = false;
-
-  setTimeout(() => {mpvLoading.value = false;}, 800);
+  noSleep.enable();
 }
 
 const onpause = () => {
@@ -205,6 +211,9 @@ const onMessage = (e) => {
       mps.duration = Math.round(data.value);
       break;
   }
+  if (mpvLoading.value) {
+    mpvLoading.value = false;
+  }
 }
 
 const onVideoSrcChange = (newVal) => {
@@ -238,13 +247,21 @@ watch(() => props.videoUrl, onVideoSrcChange);
   height: 100%;
 }
 
-.mpv-player-control {
+.mpv-player-control-container {
   width: 100%;
-  height: 44px;
+  height: 100%;
   position: absolute;
   box-sizing: border-box;
   bottom: 0;
   background-color: rgba(250, 252, 255, 0);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.mpv-player-control {
+  width: 100%;
+  height: 44px;
   display: flex;
   justify-content: space-between;
   align-items: center;

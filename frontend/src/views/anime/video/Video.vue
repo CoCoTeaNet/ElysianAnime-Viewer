@@ -67,7 +67,7 @@
                 @change="onReadStatusChange"
             />
           </p>
-          <p>推荐番剧:
+          <p>推荐番剧：
             <el-switch
                 inline-prompt
                 inactive-text="(ˇˍˇ) 想～"
@@ -78,13 +78,13 @@
                 @change="onShareChange"
             />
           </p>
-          <p>RSS链接: {{opusData.rssUrl}}</p>
           <p>番组计划: https://bgm.tv{{opusData.detailInfoUrl}}</p>
           <p>放送日期: {{opusData.launchStart}}</p>
-          <p>放送星期: {{opusData.deliveryWeek}}</p>
+          <p>放送星期: {{opusData.deliveryWeek ? opusData.deliveryWeek : '...'}}</p>
           <p>
             番剧标签: <el-tag v-for="tag in opusData.aniTags">{{tag.tagName}}</el-tag>
           </p>
+          <p style="overflow-wrap: anywhere;">RSS链接: {{opusData.rssUrl}}</p>
         </el-card>
       </el-space>
     </el-col>
