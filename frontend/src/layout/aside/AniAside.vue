@@ -1,7 +1,7 @@
 <template>
   <el-menu class="new-el-menu--sidebar" collapse default-active="1">
     <div class="menu-logo">
-      <img src="@/assets/logo.png" style="width: 36px" alt="logo">
+      <img src="../../assets/logo.png" style="width: 36px" alt="logo">
     </div>
 
     <el-menu-item index="1" @click="go('AnimeHome')">
