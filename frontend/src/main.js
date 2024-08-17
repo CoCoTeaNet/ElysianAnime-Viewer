@@ -4,7 +4,8 @@ import './assets/global.less';
 import components from './components/global';
 import Router from './router/index';
 import { createPinia } from 'pinia';
-import 'element-plus/dist/index.css'
+import 'element-plus/dist/index.css';
+import './styles/light/css-vars.css';
 
 const app = createApp(App)
 const pinia = createPinia()

@@ -3,6 +3,7 @@
 
 ## v1.0.0
 - 变更：程序LOGO替换为janime
+- 变更：全局主题色为"#f38181"
 - 优化：MpvPlayer组件资源加载完成后停止loading
 - 修复：MpvPlayer组件偶尔space按键失灵问题
 - 修复：MpvPlayer组件没法隐藏指针问题
