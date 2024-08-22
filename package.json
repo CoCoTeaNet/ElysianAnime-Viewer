@@ -1,7 +1,7 @@
 {
-  "name": "janime",
-  "version": "1.0.0",
-  "description": "desktop client for janime.",
+  "name": "elysiananime",
+  "version": "1.0.1",
+  "description": "Client for ElysianAnime.",
   "main": "main.js",
   "scripts": {
     "dev": "ee-bin dev",

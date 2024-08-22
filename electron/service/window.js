@@ -69,6 +69,7 @@ class WindowService extends Service {
                 nodeIntegration: true,
                 contextIsolation: false,
             },
+            icon: path.join(getHomeDir(), 'public', 'images', 'logo-32.png'),
         }
 
         let windowAddon = Addon.get('window');

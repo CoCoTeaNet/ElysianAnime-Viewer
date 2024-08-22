@@ -10,9 +10,9 @@ class HttpClientController extends Controller {
     }
 
     async test() {
-        const result = await Services.get('client').test('janime');
+        const result = await Services.get('client').test('ElysianAnime');
         Log.info('service result:', result);
-        return 'hello janime';
+        return 'hello ElysianAnime';
     }
 
     async curl(args) {

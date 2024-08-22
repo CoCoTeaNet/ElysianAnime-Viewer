@@ -1,8 +1,14 @@
-# JAnime Desktop 更新日志
+# 更新日志
+
+
+## v1.0.1
+- 变更：标题、app名等改为ElysianAnime
+- 优化：删除没有使用到的图标资源
+- 修复：MpvPlayer窗口图标失效问题
 
 
 ## v1.0.0
-- 变更：程序LOGO替换为janime
+- 变更：程序LOGO替换为ElysianAnime
 - 变更：全局主题色为"#f38181"
 - 优化：MpvPlayer组件资源加载完成后停止loading
 - 修复：MpvPlayer组件偶尔space按键失灵问题
@@ -24,6 +30,6 @@
 ## v1.0.0-beta.1
 - [x] 用户登录操作与用户基本信息展示
 - [x] 展示番剧列表（检索番剧可根据标题或者追番状态）
-- [x] 可配置janime服务器地址
+- [x] 可配置ElysianAnime服务器地址
 - [x] 添加内嵌 mpv 播放器
 - [x] 番剧基本播放逻辑（例：更新追番进度）

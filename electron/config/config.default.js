@@ -23,7 +23,7 @@ module.exports = (appInfo) => {
    * 主窗口
    */
   config.windowsOption = {
-    title: 'JAnimeDesk',
+    title: 'Elysian Anime',
     width: 1358,
     height: 841,
     minWidth: 400,

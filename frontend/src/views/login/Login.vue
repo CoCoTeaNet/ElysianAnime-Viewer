@@ -5,7 +5,7 @@
       <div class="login-box-right">
         <el-form ref="loginFormRef" class="login-box-form" :model="loginForm" :rules="rules">
           <el-form-item>
-            <h4 style="padding: 0;margin: 0;">LOGIN IN MY JANIME ~~~</h4>
+            <h4 style="padding: 0;margin: 0;">LOGIN IN MY ElysianAnime ~~~</h4>
           </el-form-item>
           <el-form-item prop="username">
             <el-input v-model="loginForm.username" show-word-limit placeholder="账号" :prefix-icon="User"/>

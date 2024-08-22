@@ -1,6 +1,6 @@
 {
-  "name": "janime_desktop",
-  "version": "1.0.0",
+  "name": "elysiananime",
+  "version": "1.0.1",
   "scripts": {
     "dev": "vite --host --port 8080",
     "serve": "vite --host --port 8080",

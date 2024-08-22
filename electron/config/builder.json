@@ -1,5 +1,5 @@
 {
-  "productName": "JAnime DESK",
+  "productName": "ElysianAnime",
   "appId": "net.cocotea.janime",
   "copyright": "© 2024 CoCotea Technology Co., Ltd.",
   "directories": {
@@ -26,7 +26,7 @@
     "installerHeaderIcon": "build/icons/icon.ico",
     "createDesktopShortcut": true,
     "createStartMenuShortcut": true,
-    "shortcutName": "JAnimeDesktop"
+    "shortcutName": "ElysianAnime"
   },
   "mac": {
     "icon": "build/icons/icon.icns",
